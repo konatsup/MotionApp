@@ -19,27 +19,11 @@ final class DrawView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
-        //        loadNib()。
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //        let drawLayer = CAShapeLayer()
-        //        drawLayer.frame = bounds
-        //        drawLayer.strokeColor = penColor.cgColor
-        //        drawLayer.fillColor = UIColor.clear.cgColor
-        //        drawLayer.lineWidth = penSize
-        //
-        //        drawLayer.sica
-        //            .addBasicAnimation(keyPath: .positionX, from: 50, to: 150, duration: 2, timingFunction: .easeOutExpo)
-        //            .run(type: .sequence)
-        
-        //        layer.addSublayer(drawLayer)
         self.addRectLayerCenter()
-        
-        
-        //        configure()
-        //        loadNib()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -71,6 +55,7 @@ final class DrawView: UIView {
     private func configure() {
         let nib = UINib(nibName: "DrawView", bundle: nil)
         guard let view = nib.instantiate(withOwner: self, options: nil).first as? DrawView else { return }
+        view.frame = bounds
         //        let view = UIView()
         //        view.frame = CGRect(x: 0, y: 100, width: self.bounds.width, height: 100)
         //        view.backgroundColor = UIColor.gray

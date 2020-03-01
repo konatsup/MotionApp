@@ -48,7 +48,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource {
             make.top.equalTo(self.view.snp.top)
             make.left.equalTo(self.view.snp.left)
             make.width.equalTo(self.view.snp.width)
-//            make.height.equalTo(self.view.snp.height).dividedBy(2)
+            make.height.equalTo(self.view.snp.height).dividedBy(2)
             make.center.equalTo(self.view.snp.center)
         }
 //
