@@ -9,6 +9,9 @@ target 'MotionApp' do
   # Pods for MotionApp
   pod 'SnapKit', '~> 5.0.0'
   pod 'SpreadsheetView', '~> 0.8.3'
+  pod 'Sica'
+  pod 'RxSwift', '~> 5'
+  pod 'RxCocoa', '~> 5'
 
   target 'MotionAppTests' do
     inherit! :search_paths
