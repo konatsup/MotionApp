@@ -10,6 +10,7 @@
 		1856364D240BB60E005E9E5B /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1856364C240BB60E005E9E5B /* DrawView.swift */; };
 		18563659240BDA6E005E9E5B /* MyShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18563658240BDA6E005E9E5B /* MyShapeLayer.swift */; };
 		1856365B240BDDA4005E9E5B /* DrawView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1856365A240BDDA4005E9E5B /* DrawView.xib */; };
+		1856365D240C0153005E9E5B /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1856365C240C0153005E9E5B /* ViewModel.swift */; };
 		185FD277240B77FD006E8B01 /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185FD276240B77FD006E8B01 /* Cells.swift */; };
 		18FFA74E2403CDB300F13DF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA74D2403CDB300F13DF1 /* AppDelegate.swift */; };
 		18FFA7502403CDB300F13DF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA74F2403CDB300F13DF1 /* SceneDelegate.swift */; };
@@ -46,6 +47,7 @@
 		1856364C240BB60E005E9E5B /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		18563658240BDA6E005E9E5B /* MyShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShapeLayer.swift; sourceTree = "<group>"; };
 		1856365A240BDDA4005E9E5B /* DrawView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawView.xib; sourceTree = "<group>"; };
+		1856365C240C0153005E9E5B /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		185FD276240B77FD006E8B01 /* Cells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cells.swift; sourceTree = "<group>"; };
 		18FFA74A2403CDB300F13DF1 /* MotionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FFA74D2403CDB300F13DF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				1856364C240BB60E005E9E5B /* DrawView.swift */,
 				18563658240BDA6E005E9E5B /* MyShapeLayer.swift */,
 				1856365A240BDDA4005E9E5B /* DrawView.xib */,
+				1856365C240C0153005E9E5B /* ViewModel.swift */,
 			);
 			path = MotionApp;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				185FD277240B77FD006E8B01 /* Cells.swift in Sources */,
 				18FFA74E2403CDB300F13DF1 /* AppDelegate.swift in Sources */,
 				18FFA7502403CDB300F13DF1 /* SceneDelegate.swift in Sources */,
+				1856365D240C0153005E9E5B /* ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

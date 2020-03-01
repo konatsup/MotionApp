@@ -7,16 +7,57 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 import SpreadsheetView
 
 class ViewController: UIViewController, SpreadsheetViewDataSource {
-    lazy var box = UIView()
     var spreadsheetView: SpreadsheetView!
     var drawView: DrawView!
     
+    private let disposeBag = DisposeBag()
+    lazy var label = UILabel()
+    
+    let viewModel = ViewModel()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.entityRelay
+            .asDriver(onErrorJustReturn: Entity())
+            .drive(Binder(self) {me, entity in
+                me.label.text = "\(entity.opacity)"
+            })
+            .disposed(by: disposeBag)
+        
+        let button = UIButton()
+        button.backgroundColor = .red
+        button.setTitle("+", for: .normal)
+        view.addSubview(button)
+        
+        button.snp.makeConstraints { (make) in
+            make.top.equalTo(600)
+            make.center.equalTo(self.view.center)
+            make.width.equalTo(200)
+            make.height.equalTo(50)
+        }
+        
+        button.rx.tap
+            .bind(to: viewModel.btnTapped)
+            .disposed(by: disposeBag)
+        
+        label = UILabel()
+        label.text = "aaaa"
+        self.view.addSubview(label)
+        
+        label.snp.makeConstraints { (make) in
+            make.top.equalTo(button.snp.top).offset(-100)
+            make.center.equalTo(self.view.center)
+            make.width.equalTo(100)
+            make.height.equalTo(20)
+        }
         
         
 //        spreadsheetView = SpreadsheetView()
