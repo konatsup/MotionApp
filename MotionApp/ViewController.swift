@@ -30,19 +30,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource {
 //            make.center.equalTo(self.view)
 //        }
         
-//        let oval = MyShapeLayer()
-//        oval.frame = CGRect(x:30,y:30,width:80,height:80)
-//        oval.drawOval(lineWidth:1)
-//        self.view.layer.addSublayer(oval)
-//
-//        let rect = MyShapeLayer()
-//        rect.frame = CGRect(x:40,y:40,width:50,height:50)
-//        rect.drawRect(lineWidth:1)
-//        self.view.layer.addSublayer(rect)
-        
         drawView = DrawView()
-//        drawView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height / 2)
-//        drawView.backgroundColor = .red
         self.view.addSubview(drawView)
         drawView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.view.snp.top)
@@ -51,16 +39,6 @@ class ViewController: UIViewController, SpreadsheetViewDataSource {
             make.height.equalTo(self.view.snp.height).dividedBy(2)
             make.center.equalTo(self.view.snp.center)
         }
-//
-//                box.backgroundColor = .green
-        // Do any additional setup after loading the view.
-//        self.view.addSubview(box)
-//        box.backgroundColor = .green
-//        box.snp.makeConstraints { (make) -> Void in
-//            make.width.height.equalTo(50)
-//            make.center.equalTo(self.view)
-//        }
-        
         
         
     }
