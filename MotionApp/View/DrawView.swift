@@ -9,22 +9,12 @@
 import UIKit
 import Sica
 
-final class DrawView: UIView {
+final class DrawView: BaseView {
     
     var penColor = UIColor.black
     var penSize: CGFloat = 6.0
     private var path = UIBezierPath()
     private var drawLayer: MyShapeLayer!
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configure()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.addRectLayerCenter()
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let currentPoint = touches.first!.location(in: self)
@@ -32,10 +22,10 @@ final class DrawView: UIView {
         
         //        addRectLayer(p: currentPoint)
         //        path.move(to: currentPoint)
-        drawLayer.sica
-            .addBasicAnimation(keyPath: .positionY, from: 200, to: 600, duration: 2, timingFunction: .easeOutExpo)
+//        drawLayer.sica
+//            .addBasicAnimation(keyPath: .positionY, from: 200, to: 600, duration: 2, timingFunction: .easeOutExpo)
 //            .addBasicAnimation(keyPath: .positionX, from: 50, to: 200, duration: 2, timingFunction:  .easeOutExpo)
-            .run(type: .sequence)
+//            .run(type: .sequence)
         
     }
     
@@ -52,17 +42,13 @@ final class DrawView: UIView {
         //        drawLayer.path = path.cgPath
     }
     
-    private func configure() {
-        let nib = UINib(nibName: "DrawView", bundle: nil)
-        guard let view = nib.instantiate(withOwner: self, options: nil).first as? DrawView else { return }
-        view.frame = bounds
-        //        let view = UIView()
-        //        view.frame = CGRect(x: 0, y: 100, width: self.bounds.width, height: 100)
-        //        view.backgroundColor = UIColor.gray
-        //        view.
-        addSubview(view)
-        print("configure")
-    }
+//    private func configure() {
+//        let nib = UINib(nibName: "DrawView", bundle: nil)
+//        guard let view = nib.instantiate(withOwner: self, options: nil).first as? DrawView else { return }
+//        view.frame = bounds
+//        addSubview(view)
+//        print("configure")
+//    }
     
     //    func loadNib() {
     //        if let view = Bundle(for: type(of: self)).loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? UIView {

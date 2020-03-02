@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		183F4FF6240CD61E00F2A6A1 /* SideCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F4FF5240CD61E00F2A6A1 /* SideCellView.swift */; };
+		183F4FF8240CE49300F2A6A1 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F4FF7240CE49300F2A6A1 /* BaseView.swift */; };
+		183F4FFA240CE50D00F2A6A1 /* BaseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183F4FF9240CE50D00F2A6A1 /* BaseView.xib */; };
 		1856364D240BB60E005E9E5B /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1856364C240BB60E005E9E5B /* DrawView.swift */; };
 		18563659240BDA6E005E9E5B /* MyShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18563658240BDA6E005E9E5B /* MyShapeLayer.swift */; };
 		1856365B240BDDA4005E9E5B /* DrawView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1856365A240BDDA4005E9E5B /* DrawView.xib */; };
@@ -44,6 +47,9 @@
 
 /* Begin PBXFileReference section */
 		0C436D343495939FF6BC0F91 /* Pods_MotionAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MotionAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		183F4FF5240CD61E00F2A6A1 /* SideCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideCellView.swift; sourceTree = "<group>"; };
+		183F4FF7240CE49300F2A6A1 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		183F4FF9240CE50D00F2A6A1 /* BaseView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseView.xib; sourceTree = "<group>"; };
 		1856364C240BB60E005E9E5B /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		18563658240BDA6E005E9E5B /* MyShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShapeLayer.swift; sourceTree = "<group>"; };
 		1856365A240BDDA4005E9E5B /* DrawView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawView.xib; sourceTree = "<group>"; };
@@ -101,6 +107,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		183F4FF4240CD45F00F2A6A1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18563658240BDA6E005E9E5B /* MyShapeLayer.swift */,
+				1856364C240BB60E005E9E5B /* DrawView.swift */,
+				185FD276240B77FD006E8B01 /* Cells.swift */,
+				183F4FF5240CD61E00F2A6A1 /* SideCellView.swift */,
+				183F4FF7240CE49300F2A6A1 /* BaseView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		18FFA7412403CDB300F13DF1 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +144,7 @@
 		18FFA74C2403CDB300F13DF1 /* MotionApp */ = {
 			isa = PBXGroup;
 			children = (
+				183F4FF4240CD45F00F2A6A1 /* View */,
 				18FFA74D2403CDB300F13DF1 /* AppDelegate.swift */,
 				18FFA74F2403CDB300F13DF1 /* SceneDelegate.swift */,
 				18FFA7512403CDB300F13DF1 /* EditViewController.swift */,
@@ -133,11 +152,9 @@
 				18FFA7562403CDB500F13DF1 /* Assets.xcassets */,
 				18FFA7582403CDB500F13DF1 /* LaunchScreen.storyboard */,
 				18FFA75B2403CDB500F13DF1 /* Info.plist */,
-				185FD276240B77FD006E8B01 /* Cells.swift */,
-				1856364C240BB60E005E9E5B /* DrawView.swift */,
-				18563658240BDA6E005E9E5B /* MyShapeLayer.swift */,
 				1856365A240BDDA4005E9E5B /* DrawView.xib */,
 				1856365C240C0153005E9E5B /* EditViewModel.swift */,
+				183F4FF9240CE50D00F2A6A1 /* BaseView.xib */,
 			);
 			path = MotionApp;
 			sourceTree = "<group>";
@@ -294,6 +311,7 @@
 			files = (
 				18FFA75A2403CDB500F13DF1 /* LaunchScreen.storyboard in Resources */,
 				18FFA7572403CDB500F13DF1 /* Assets.xcassets in Resources */,
+				183F4FFA240CE50D00F2A6A1 /* BaseView.xib in Resources */,
 				1856365B240BDDA4005E9E5B /* DrawView.xib in Resources */,
 				18FFA7552403CDB300F13DF1 /* Main.storyboard in Resources */,
 			);
@@ -428,6 +446,8 @@
 				18563659240BDA6E005E9E5B /* MyShapeLayer.swift in Sources */,
 				185FD277240B77FD006E8B01 /* Cells.swift in Sources */,
 				18FFA74E2403CDB300F13DF1 /* AppDelegate.swift in Sources */,
+				183F4FF6240CD61E00F2A6A1 /* SideCellView.swift in Sources */,
+				183F4FF8240CE49300F2A6A1 /* BaseView.swift in Sources */,
 				18FFA7502403CDB300F13DF1 /* SceneDelegate.swift in Sources */,
 				1856365D240C0153005E9E5B /* EditViewModel.swift in Sources */,
 			);
@@ -604,7 +624,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H9A9L5MZZC;
 				INFOPLIST_FILE = MotionApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -622,7 +644,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H9A9L5MZZC;
 				INFOPLIST_FILE = MotionApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

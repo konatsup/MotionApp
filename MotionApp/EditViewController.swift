@@ -22,7 +22,9 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate,SpreadsheetV
         spreadSheetView.delegate = self
         spreadSheetView.stickyRowHeader = true
         spreadSheetView.stickyColumnHeader = true
-//        spreadSheetView.circularScrolling = CircularScrolling.Configuration.both
+        spreadSheetView.bounces = false
+        spreadSheetView.isDirectionalLockEnabled = true
+//        spreadSheetView.gridStyle = .default
         spreadSheetView.register(HeaderCell.self, forCellWithReuseIdentifier: String(describing: HeaderCell.self))
         spreadSheetView.register(TextCell.self, forCellWithReuseIdentifier: String(describing: TextCell.self))
         return spreadSheetView
@@ -45,10 +47,10 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate,SpreadsheetV
             })
             .disposed(by: disposeBag)
         
-        let button = UIButton()
-        button.backgroundColor = .red
-        button.setTitle("+", for: .normal)
-        view.addSubview(button)
+//        let button = UIButton()
+//        button.backgroundColor = .red
+//        button.setTitle("+", for: .normal)
+//        view.addSubview(button)
         
 //        button.snp.makeConstraints { (make) in
 //            make.top.equalTo(600)
@@ -57,13 +59,13 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate,SpreadsheetV
 //            make.height.equalTo(50)
 //        }
 //
-        button.rx.tap
-            .bind(to: viewModel.btnTapped)
-            .disposed(by: disposeBag)
-        
-        label = UILabel()
-        label.text = "aaaa"
-        self.view.addSubview(label)
+//        button.rx.tap
+//            .bind(to: viewModel.btnTapped)
+//            .disposed(by: disposeBag)
+//
+//        label = UILabel()
+//        label.text = "aaaa"
+//        self.view.addSubview(label)
         
 //        label.snp.makeConstraints { (make) in
 //            make.top.equalTo(button.snp.top).offset(-100)
@@ -97,36 +99,52 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate,SpreadsheetV
         
         
     }
+    let columns = 30
+    let rows = 20
+    
+    let width: CGFloat = 50
+    let height: CGFloat = 50
     
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
-        return 20
+        return columns
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return 40
+        return rows
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
-        return 80
+        return width
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {
-        return 40
+        return height
     }
+    
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
         if case 0 = indexPath.row {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             cell.label.text = "aaaa"
-            cell.sortArrow.text = "uuuuu"
+//            cell.sortArrow.text = "uuuuu"
             
             cell.setNeedsLayout()
             
             return cell
+            
         } else {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TextCell.self), for: indexPath) as! TextCell
             cell.label.text = "iiiiadsfafsfsdfas"
+//            cell.sideCellView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+//            cell.sideCellView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+//            cell.addSideCellView(width: width, height: height)
             return cell
         }
+    }
+    
+    func mergedCells(in spreadsheetView: SpreadsheetView) -> [CellRange] {
+        return [CellRange(from: (row: 0, column: 1), to: (row: 0, column: columns - 1)),
+                CellRange(from: (row: 1, column: 0), to: (row: rows - 1, column: 0)),
+                CellRange(from: (row: 1, column: 1), to: (row: rows - 1, column: columns - 1))]
     }
     
     func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int {
@@ -134,9 +152,8 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate,SpreadsheetV
     }
     
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return 2
+        return 1
     }
-    
     
 }
 
