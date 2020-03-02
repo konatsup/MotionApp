@@ -12,12 +12,12 @@ import RxCocoa
 import SnapKit
 import SpreadsheetView
 
-class ViewController: UIViewController, SpreadsheetViewDelegate,SpreadsheetViewDataSource {
+class EditViewController: UIViewController, SpreadsheetViewDelegate,SpreadsheetViewDataSource {
 //    var spreadsheetView: SpreadsheetView!
     private lazy var spreadSheetView: SpreadsheetView = {
         let spreadSheetView = SpreadsheetView()
         spreadSheetView.translatesAutoresizingMaskIntoConstraints = false
-        spreadSheetView.backgroundColor = .blue
+        spreadSheetView.backgroundColor = .white
         spreadSheetView.dataSource = self
         spreadSheetView.delegate = self
         spreadSheetView.stickyRowHeader = true
@@ -32,7 +32,7 @@ class ViewController: UIViewController, SpreadsheetViewDelegate,SpreadsheetViewD
     private let disposeBag = DisposeBag()
     lazy var label = UILabel()
     
-    let viewModel = ViewModel()
+    let viewModel = EditViewModel()
     
     
     override func viewDidLoad() {
@@ -127,6 +127,14 @@ class ViewController: UIViewController, SpreadsheetViewDelegate,SpreadsheetViewD
             cell.label.text = "iiiiadsfafsfsdfas"
             return cell
         }
+    }
+    
+    func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int {
+        return 1
+    }
+    
+    func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
+        return 2
     }
     
     

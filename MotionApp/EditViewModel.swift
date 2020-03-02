@@ -23,7 +23,7 @@ struct Entity {
     var position: CGPoint = CGPoint(x: 0, y: 0)
 }
 
-final class ViewModel: ViewModelInput, ViewModelOutput {
+final class EditViewModel: ViewModelInput, ViewModelOutput {
     private let disposeBag = DisposeBag()
     
     //input
