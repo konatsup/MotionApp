@@ -17,6 +17,9 @@
 		18563659240BDA6E005E9E5B /* MyShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18563658240BDA6E005E9E5B /* MyShapeLayer.swift */; };
 		1856365B240BDDA4005E9E5B /* DrawView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1856365A240BDDA4005E9E5B /* DrawView.xib */; };
 		1856365D240C0153005E9E5B /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1856365C240C0153005E9E5B /* EditViewModel.swift */; };
+		185826FE241B612D00CF6F8E /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185826FD241B612D00CF6F8E /* PostListViewController.swift */; };
+		18582700241B622400CF6F8E /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185826FF241B622400CF6F8E /* PostCollectionViewCell.swift */; };
+		18582702241B888A00CF6F8E /* PostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18582701241B888A00CF6F8E /* PostListViewModel.swift */; };
 		185FD277240B77FD006E8B01 /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185FD276240B77FD006E8B01 /* Cells.swift */; };
 		18771A52240E2891003346EF /* EditViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18771A51240E2891003346EF /* EditViewDataSource.swift */; };
 		18771A54240F8B0F003346EF /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18771A53240F8B0F003346EF /* TestViewController.swift */; };
@@ -67,6 +70,9 @@
 		18563658240BDA6E005E9E5B /* MyShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShapeLayer.swift; sourceTree = "<group>"; };
 		1856365A240BDDA4005E9E5B /* DrawView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawView.xib; sourceTree = "<group>"; };
 		1856365C240C0153005E9E5B /* EditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModel.swift; sourceTree = "<group>"; };
+		185826FD241B612D00CF6F8E /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
+		185826FF241B622400CF6F8E /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
+		18582701241B888A00CF6F8E /* PostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewModel.swift; sourceTree = "<group>"; };
 		185FD276240B77FD006E8B01 /* Cells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cells.swift; sourceTree = "<group>"; };
 		18771A51240E2891003346EF /* EditViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewDataSource.swift; sourceTree = "<group>"; };
 		18771A53240F8B0F003346EF /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +191,9 @@
 				18771A59240F9319003346EF /* TrackCell.xib */,
 				18771A5B240FBA97003346EF /* TrackViewCell.swift */,
 				18771A5C240FBA97003346EF /* TrackViewCell.xib */,
+				185826FD241B612D00CF6F8E /* PostListViewController.swift */,
+				185826FF241B622400CF6F8E /* PostCollectionViewCell.swift */,
+				18582701241B888A00CF6F8E /* PostListViewModel.swift */,
 			);
 			path = MotionApp;
 			sourceTree = "<group>";
@@ -477,15 +486,18 @@
 			files = (
 				18FFA7522403CDB300F13DF1 /* EditViewController.swift in Sources */,
 				1856364D240BB60E005E9E5B /* DrawView.swift in Sources */,
+				18582702241B888A00CF6F8E /* PostListViewModel.swift in Sources */,
 				18563659240BDA6E005E9E5B /* MyShapeLayer.swift in Sources */,
 				18771A52240E2891003346EF /* EditViewDataSource.swift in Sources */,
 				18771A5D240FBA97003346EF /* TrackViewCell.swift in Sources */,
 				185FD277240B77FD006E8B01 /* Cells.swift in Sources */,
 				18771A54240F8B0F003346EF /* TestViewController.swift in Sources */,
 				18FFA74E2403CDB300F13DF1 /* AppDelegate.swift in Sources */,
+				185826FE241B612D00CF6F8E /* PostListViewController.swift in Sources */,
 				18771A58240F901D003346EF /* TrackCell.swift in Sources */,
 				183F4FFE240E120F00F2A6A1 /* NibView.swift in Sources */,
 				183F4FFC240D2B1700F2A6A1 /* TimeMeterView.swift in Sources */,
+				18582700241B622400CF6F8E /* PostCollectionViewCell.swift in Sources */,
 				183F4FF6240CD61E00F2A6A1 /* SideCellView.swift in Sources */,
 				183F4FF8240CE49300F2A6A1 /* BaseView.swift in Sources */,
 				18FFA7502403CDB300F13DF1 /* SceneDelegate.swift in Sources */,
