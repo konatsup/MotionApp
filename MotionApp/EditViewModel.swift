@@ -34,8 +34,8 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     var e = Entity()
     
     var timer: Timer = Timer()
-    var timerCountRelay = PublishRelay<Float>()
-    var timerCount: Float = 0.0
+    var timerCountRelay = PublishRelay<Double>()
+    var timerCount: Double = 0.0
     
     init() {
         btnTapped.bind(to: Binder(self) {me, _ in

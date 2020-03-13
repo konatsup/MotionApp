@@ -68,23 +68,18 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
             .disposed(by: disposeBag)
         
         
-                viewModel.timerCountRelay
-                    .asDriver(onErrorJustReturn: 0)
-                    .drive(Binder(self) {me, timerCount in
-                        me.label.text = "\(timerCount)"
-                    })
-                    .disposed(by: disposeBag)
-        //
-                label = UILabel()
-                label.text = "aaaa"
-                self.view.addSubview(label)
         
-                label.snp.makeConstraints { (make) in
-                    make.top.equalTo(button.snp.top).offset(-100)
-                    make.center.equalTo(self.view.center)
-                    make.width.equalTo(100)
-                    make.height.equalTo(20)
-                }
+        //
+        label = UILabel()
+        label.text = "aaaa"
+        self.view.addSubview(label)
+        
+        label.snp.makeConstraints { (make) in
+            make.top.equalTo(button.snp.top).offset(-100)
+            make.center.equalTo(self.view.center)
+            make.width.equalTo(100)
+            make.height.equalTo(20)
+        }
         
         //        self.view.addSubview(spreadSheetView)
         //        spreadSheetView.snp.makeConstraints { (make) -> Void in
@@ -107,7 +102,17 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
             make.center.equalTo(self.view.snp.center)
         }
         
-//        countBtn.rx.tap.bind(to: viewModel.btnTapped).disposed(by: disposeBag)
+        
+        viewModel.timerCountRelay
+        .asDriver(onErrorJustReturn: 0)
+        .drive(Binder(self) {me, timerCount in
+            
+            me.label.text = "\(timerCount)"
+            me.drawView.update(timerCount)
+        })
+        .disposed(by: disposeBag)
+        
+        //        countBtn.rx.tap.bind(to: viewModel.btnTapped).disposed(by: disposeBag)
         
         
         
