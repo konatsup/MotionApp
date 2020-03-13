@@ -75,10 +75,9 @@ final class PostListViewController: UIViewController {
     }
     
     fileprivate func moveNextVC(indexPath: IndexPath) {
-//        let itemName = fruits[indexPath.item]
         
-//        let nextVC = EditViewController()
-//        present(nextVC, animated: true, completion: nil)
+        let nextVC = EditViewController()
+        present(nextVC, animated: true, completion: nil)
     }
     
 }
@@ -92,8 +91,6 @@ extension PostListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCollectionViewCell", for: indexPath) as! PostCollectionViewCell
-//        cell.layer.borderColor = UIColor.clear.cgColor
-//        cell.layer.borderWidth = 1
         cell.setAnimations(animations: self.animations)
         cells.append(cell)
         return cell
