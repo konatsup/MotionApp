@@ -9,16 +9,43 @@
 import UIKit
 import Sica
 
-final class DrawView: BaseView {
+final class DrawView: UIView {
     
-    var penColor = UIColor.black
-    var penSize: CGFloat = 6.0
     private var path = UIBezierPath()
     private var drawLayer: MyShapeLayer!
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+//        super.backgroundColor = .green
+//        addRectLayerCenter()
+        let view = UIView()
+//        print(frame)
+        view.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+//        print(view.frame)
+        addSubview(view)
+//        loadNib()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    
+//
+    func loadNib() {
+
+        
+        
+        let nib = UINib(nibName: "BaseView", bundle: nil)
+        guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else { return }
+        view.frame = self.bounds
+        view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        addSubview(view)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let currentPoint = touches.first!.location(in: self)
-        print( currentPoint)
+//        print( currentPoint)
         
         //        addRectLayer(p: currentPoint)
         //        path.move(to: currentPoint)
@@ -41,21 +68,6 @@ final class DrawView: BaseView {
         //        path.addLine(to: currentPoint)
         //        drawLayer.path = path.cgPath
     }
-    
-//    private func configure() {
-//        let nib = UINib(nibName: "DrawView", bundle: nil)
-//        guard let view = nib.instantiate(withOwner: self, options: nil).first as? DrawView else { return }
-//        view.frame = bounds
-//        addSubview(view)
-//        print("configure")
-//    }
-    
-    //    func loadNib() {
-    //        if let view = Bundle(for: type(of: self)).loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? UIView {
-    //            view.frame = self.bounds
-    //            self.addSubview(view)
-    //        }
-    //    }
     
     private func addRectLayerCenter() {
         drawLayer = MyShapeLayer()

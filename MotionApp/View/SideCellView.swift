@@ -14,7 +14,7 @@ final class SideCellView: BaseView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        print(frame)
+//        print(frame)
         addRectLayerCenter()
 //        addBackgroundLayer()
     }

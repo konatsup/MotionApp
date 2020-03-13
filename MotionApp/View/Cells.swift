@@ -60,7 +60,7 @@ extension HeaderCell {
 
 class TextCell: Cell {
     let label = UILabel()
-    let sideCellView = SideCellView()
+    var sideCellView = SideCellView()
     
     override var frame: CGRect {
         didSet {
@@ -75,16 +75,16 @@ class TextCell: Cell {
         backgroundView.backgroundColor = UIColor(red: 0, green: 0, blue: 1, alpha: 0.2)
         selectedBackgroundView = backgroundView
         
-//        sideCellView.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
-//              sideCellView.backgroundColor = .green
-//        print(sideCellView.frame)
-//        contentView.addSubview(sideCellView)
+        
+        sideCellView.frame = frame
+        sideCellView.backgroundColor = .green
+        contentView.addSubview(sideCellView)
         
         label.frame = bounds
         label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .left
-//
+        
         contentView.addSubview(label)
     }
     
@@ -93,9 +93,30 @@ class TextCell: Cell {
     }
     
     func addSideCellView(width: CGFloat, height: CGFloat){
-         sideCellView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-          sideCellView.backgroundColor = .green
-        //        print(sideCellView.frame)
+        sideCellView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        sideCellView.backgroundColor = .green
         contentView.addSubview(sideCellView)
+    }
+}
+
+
+class TimeMeterCell: Cell {
+    var timeMeterView = TimeMeterView()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.2)
+        selectedBackgroundView = backgroundView
+        
+        timeMeterView.frame = CGRect(x: 0, y: 0, width: 100, height: 400)
+        timeMeterView.backgroundColor = .red
+        timeMeterView.subviews.map{ $0.backgroundColor = .red }
+        contentView.addSubview(timeMeterView)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 }

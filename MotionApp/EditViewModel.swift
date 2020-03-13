@@ -33,16 +33,33 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     var entityRelay = PublishRelay<Entity>()
     var e = Entity()
     
+    var timer: Timer = Timer()
+    var timerCountRelay = PublishRelay<Float>()
+    var timerCount: Float = 0.0
+    
     init() {
         btnTapped.bind(to: Binder(self) {me, _ in
+            
+            if !self.timer.isValid {
+                self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.up), userInfo: nil,  repeats: true)
+            }
 //            let opacity = 10
-            me.e.opacity += 10
+//            me.e.opacity += 10
+//
+//            let position: CGPoint = CGPoint(x: 0, y: 0)
+//            me.e.position = position
             
-            let position: CGPoint = CGPoint(x: 0, y: 0)
-            me.e.position = position
-            
-            me.entityRelay.accept(me.e)
-        })
-            .disposed(by: disposeBag)
+//            me.entityRelay.accept(me.e)
+        }).disposed(by: disposeBag)
+        
+        
     }
+    
+    @objc func up() {
+        timerCount += 0.01
+        print(timerCount)
+        self.timerCountRelay.accept(timerCount)
+    }
+    
+    
 }
