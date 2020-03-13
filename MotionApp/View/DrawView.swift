@@ -78,10 +78,6 @@ final class DrawView: UIView {
                     .addBasicAnimation(keyPath: .positionX, from: CGFloat(animation.fromX), to: CGFloat(animation.toX), duration: duration, timingFunction: .easeOutExpo)
                     .run(type: .sequence)
                 
-//                drawLayers[0].sica
-//                .addBasicAnimation(keyPath: .positionY, from: CGFloat(animation.fromY), to: CGFloat(animation.toY), duration: duration, timingFunction: .easeOutExpo)
-//                .run(type: .sequence)
-                
             }
         }
     }

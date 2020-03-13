@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import SpreadsheetView
+//import Firebase
 
 class EditViewController: UIViewController, SpreadsheetViewDelegate{
     //    var spreadsheetView: SpreadsheetView!
@@ -53,7 +54,7 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
         
         let button = UIButton()
         button.backgroundColor = .red
-        button.setTitle("+", for: .normal)
+        button.setTitle("start", for: .normal)
         view.addSubview(button)
         
         button.snp.makeConstraints { (make) in
@@ -67,7 +68,21 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
             .bind(to: viewModel.btnTapped)
             .disposed(by: disposeBag)
         
+        let uploadButton = UIButton()
+        uploadButton.backgroundColor = .green
+        uploadButton.setTitle("upload", for: .normal)
+        view.addSubview(uploadButton)
         
+        uploadButton.snp.makeConstraints { (make) in
+            make.top.equalTo(700)
+            make.center.equalTo(self.view.center)
+            make.width.equalTo(200)
+            make.height.equalTo(50)
+        }
+        
+        uploadButton.rx.tap
+        .bind(to: viewModel.uploadBtnTapped)
+        .disposed(by: disposeBag)
         
         //
         label = UILabel()

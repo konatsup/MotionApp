@@ -28,7 +28,8 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     
     //input
     var btnTapped = PublishRelay<Void>()
-
+    var uploadBtnTapped = PublishRelay<Void>()
+    
     //output
     var entityRelay = PublishRelay<Entity>()
     var e = Entity()
@@ -43,13 +44,17 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
             if !self.timer.isValid {
                 self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.up), userInfo: nil,  repeats: true)
             }
-//            let opacity = 10
-//            me.e.opacity += 10
-//
-//            let position: CGPoint = CGPoint(x: 0, y: 0)
-//            me.e.position = position
+            //            let opacity = 10
+            //            me.e.opacity += 10
+            //
+            //            let position: CGPoint = CGPoint(x: 0, y: 0)
+            //            me.e.position = position
             
-//            me.entityRelay.accept(me.e)
+            //            me.entityRelay.accept(me.e)
+        }).disposed(by: disposeBag)
+        
+        uploadBtnTapped.bind(to: Binder(self) {me, _ in
+            print("upload")
         }).disposed(by: disposeBag)
         
         

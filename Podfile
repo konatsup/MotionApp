@@ -12,6 +12,8 @@ target 'MotionApp' do
   pod 'Sica'
   pod 'RxSwift', '~> 5'
   pod 'RxCocoa', '~> 5'
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
 
   target 'MotionAppTests' do
     inherit! :search_paths

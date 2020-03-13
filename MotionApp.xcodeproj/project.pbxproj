@@ -24,6 +24,7 @@
 		18771A5A240F9319003346EF /* TrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18771A59240F9319003346EF /* TrackCell.xib */; };
 		18771A5D240FBA97003346EF /* TrackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18771A5B240FBA97003346EF /* TrackViewCell.swift */; };
 		18771A5E240FBA97003346EF /* TrackViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18771A5C240FBA97003346EF /* TrackViewCell.xib */; };
+		18771A60241B4D23003346EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18771A5F241B4D23003346EF /* GoogleService-Info.plist */; };
 		18FFA74E2403CDB300F13DF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA74D2403CDB300F13DF1 /* AppDelegate.swift */; };
 		18FFA7502403CDB300F13DF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA74F2403CDB300F13DF1 /* SceneDelegate.swift */; };
 		18FFA7522403CDB300F13DF1 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA7512403CDB300F13DF1 /* EditViewController.swift */; };
@@ -73,6 +74,7 @@
 		18771A59240F9319003346EF /* TrackCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackCell.xib; sourceTree = "<group>"; };
 		18771A5B240FBA97003346EF /* TrackViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackViewCell.swift; sourceTree = "<group>"; };
 		18771A5C240FBA97003346EF /* TrackViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackViewCell.xib; sourceTree = "<group>"; };
+		18771A5F241B4D23003346EF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18FFA74A2403CDB300F13DF1 /* MotionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FFA74D2403CDB300F13DF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18FFA74F2403CDB300F13DF1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				1856365C240C0153005E9E5B /* EditViewModel.swift */,
 				183F4FF9240CE50D00F2A6A1 /* BaseView.xib */,
 				183F5001240E198C00F2A6A1 /* TimeMeterView.xib */,
+				18771A5F241B4D23003346EF /* GoogleService-Info.plist */,
 				18771A51240E2891003346EF /* EditViewDataSource.swift */,
 				18771A53240F8B0F003346EF /* TestViewController.swift */,
 				18771A57240F901D003346EF /* TrackCell.swift */,
@@ -338,6 +341,7 @@
 			files = (
 				18FFA75A2403CDB500F13DF1 /* LaunchScreen.storyboard in Resources */,
 				18FFA7572403CDB500F13DF1 /* Assets.xcassets in Resources */,
+				18771A60241B4D23003346EF /* GoogleService-Info.plist in Resources */,
 				18771A5E240FBA97003346EF /* TrackViewCell.xib in Resources */,
 				183F4FFA240CE50D00F2A6A1 /* BaseView.xib in Resources */,
 				18771A5A240F9319003346EF /* TrackCell.xib in Resources */,

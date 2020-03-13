@@ -1,4 +1,77 @@
 PODS:
+  - Firebase/Core (6.18.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 6.3.0)
+  - Firebase/CoreOnly (6.18.0):
+    - FirebaseCore (= 6.6.3)
+  - Firebase/Database (6.18.0):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (~> 6.1.4)
+  - FirebaseAnalytics (6.3.0):
+    - FirebaseCore (~> 6.6)
+    - FirebaseInstallations (~> 1.1)
+    - GoogleAppMeasurement (= 6.3.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - FirebaseAuthInterop (1.0.0)
+  - FirebaseCore (6.6.3):
+    - FirebaseCoreDiagnostics (~> 1.2)
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
+  - FirebaseCoreDiagnostics (1.2.1):
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleDataTransportCCTSupport (~> 1.3)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
+    - nanopb (~> 0.3.901)
+  - FirebaseCoreDiagnosticsInterop (1.2.0)
+  - FirebaseDatabase (6.1.4):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+    - leveldb-library (~> 1.22)
+  - FirebaseInstallations (1.1.0):
+    - FirebaseCore (~> 6.6)
+    - GoogleUtilities/UserDefaults (~> 6.5)
+    - PromisesObjC (~> 1.2)
+  - GoogleAppMeasurement (6.3.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - GoogleDataTransport (4.0.1)
+  - GoogleDataTransportCCTSupport (1.4.1):
+    - GoogleDataTransport (~> 4.0)
+    - nanopb (~> 0.3.901)
+  - GoogleUtilities/AppDelegateSwizzler (6.5.1):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (6.5.1)
+  - GoogleUtilities/Logger (6.5.1):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (6.5.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (6.5.1):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (6.5.1)"
+  - GoogleUtilities/Reachability (6.5.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (6.5.1):
+    - GoogleUtilities/Logger
+  - leveldb-library (1.22)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
+  - PromisesObjC (1.2.8)
   - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -10,6 +83,8 @@ PODS:
   - SpreadsheetView (0.8.4)
 
 DEPENDENCIES:
+  - Firebase/Core
+  - Firebase/Database
   - RxCocoa (~> 5)
   - RxSwift (~> 5)
   - Sica
@@ -18,6 +93,21 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseAuthInterop
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCoreDiagnosticsInterop
+    - FirebaseDatabase
+    - FirebaseInstallations
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleDataTransportCCTSupport
+    - GoogleUtilities
+    - leveldb-library
+    - nanopb
+    - PromisesObjC
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -26,6 +116,21 @@ SPEC REPOS:
     - SpreadsheetView
 
 SPEC CHECKSUMS:
+  Firebase: 0490eca762a72e4f1582319539153897f1508dee
+  FirebaseAnalytics: 058d71e714a1a6804d9e0f25e3bb18e377a51579
+  FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
+  FirebaseCore: 78276943ad85e616dfa54dafa6c89512987d9d60
+  FirebaseCoreDiagnostics: 2109d10c35e8289b1ee6cabf44d9ffb055620194
+  FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
+  FirebaseDatabase: 0144e0706a4761f1b0e8679572eba8095ddb59be
+  FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
+  GoogleAppMeasurement: 39ecba10918b21c83877d392246157f65db351cf
+  GoogleDataTransport: 653963cf5be60fb59cf051e070f0836fdc305f81
+  GoogleDataTransportCCTSupport: 84e4d4bbab642f2e9d83ee65d78aca2b5527d314
+  GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
+  leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
@@ -33,6 +138,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SpreadsheetView: 17c55b6dc82099993cc2ceb818248d19f3220998
 
-PODFILE CHECKSUM: 312b662d3d98a4b80d1172449b2d9131366e7964
+PODFILE CHECKSUM: e61830e85d47326e4377abd7609020fe2b92a3e1
 
 COCOAPODS: 1.9.0
