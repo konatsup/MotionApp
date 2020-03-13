@@ -29,23 +29,42 @@ final class PostListViewController: UIViewController {
         collectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
         return collectionView
     }()
-
+    
     private let disposeBag = DisposeBag()
     let viewModel = PostListViewModel()
     
-    var animations: [AnimationLayer] = []
+    var projects: [Project] = []
     var cells: [PostCollectionViewCell] = []
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         viewModel.timerCountRelay
-        .asDriver(onErrorJustReturn: 0)
-        .drive(Binder(self) {me, timerCount in
-            me.cells.forEach{ $0.drawView.update(timerCount) }
-        })
-        .disposed(by: disposeBag)
+            .asDriver(onErrorJustReturn: 0)
+            .drive(Binder(self) {me, timerCount in
+                me.cells.forEach{ $0.drawView.update(timerCount) }
+            })
+            .disposed(by: disposeBag)
+        
+        //        viewModel.animationsRelay
+        //        .asDriver(onErrorJustReturn: [])
+        //        .drive(Binder(self) {me, animations in
+        //            print("update animations")
+        //            me.animations = animations
+        //            me.collectionView.reloadData()
+        //            me.cells.forEach{ $0.drawView.update(timerCount) }
+        //        })
+        //        .disposed(by: disposeBag)
+        
+        viewModel.projectsRelay
+            .asDriver(onErrorJustReturn: [])
+            .drive(Binder(self) {me, projects in
+                print("update animations")
+                me.projects = projects
+                me.collectionView.reloadData()
+                
+            })
+            .disposed(by: disposeBag)
         
         let button = UIButton()
         button.backgroundColor = .red
@@ -63,14 +82,9 @@ final class PostListViewController: UIViewController {
             .bind(to: viewModel.btnTapped)
             .disposed(by: disposeBag)
         
-        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 0, fromY: 100, toX: 100, toY: 600)
-        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 200, fromY: 0, toX: 0, toY: 200)
-        animations.append(animation1)
-        animations.append(animation2)
-        
         collectionView.dataSource = self
         collectionView.delegate = self
-
+        
         view.addSubview(collectionView)
     }
     
@@ -83,32 +97,33 @@ final class PostListViewController: UIViewController {
 }
 
 extension PostListViewController: UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return animations.count
+        return projects.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCollectionViewCell", for: indexPath) as! PostCollectionViewCell
-        cell.setAnimations(animations: self.animations)
+        
+        cell.setAnimations(animations: self.projects[indexPath.item].animations)
         cells.append(cell)
         return cell
     }
 }
 
 extension PostListViewController: UICollectionViewDelegate {
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         moveNextVC(indexPath: indexPath)
     }
 }
 
 extension PostListViewController: UICollectionViewDelegateFlowLayout {
-
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-      //ここでは画面の横サイズの半分の大きさのcellサイズを指定
-      return CGSize(width: screenSize.width / 2.0, height: screenSize.width / 2.0)
-  }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        //ここでは画面の横サイズの半分の大きさのcellサイズを指定
+        return CGSize(width: screenSize.width / 2.0, height: screenSize.width / 2.0)
+    }
 }

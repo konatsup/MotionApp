@@ -23,6 +23,15 @@ class AnimationLayer {
         self.toX = toX
         self.toY = toY
     }
+    
+    init(dict: [String: Any]) {
+        self.startTime = dict["startTime"] as! Double
+        self.endTime = dict["endTime"] as! Double
+        self.fromX = dict["fromX"] as! Double
+        self.fromY = dict["fromY"] as! Double
+        self.toX = dict["toX"] as! Double
+        self.toY = dict["toY"] as! Double
+    }
 }
 
 
