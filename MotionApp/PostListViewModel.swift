@@ -55,10 +55,19 @@ final class PostListViewModel {
         })
         
         print("init PLViewModel")
+    }
+    
+    func startTimer(){
         if !self.timer.isValid {
             self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.up), userInfo: nil,  repeats: true)
         }
-        
+    }
+    
+    func stopTimer(){
+        if self.timer.isValid {
+            timer.invalidate()
+            print("invalidate")
+        }
     }
     
     @objc func up() {

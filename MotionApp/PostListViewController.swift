@@ -87,6 +87,15 @@ final class PostListViewController: UIViewController {
         
         view.addSubview(collectionView)
     }
+    override func viewDidAppear(_ animated: Bool) {
+        print("Did")
+        viewModel.startTimer()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("DisAppear")
+        viewModel.stopTimer()
+    }
     
     fileprivate func moveNextVC(indexPath: IndexPath) {
         
