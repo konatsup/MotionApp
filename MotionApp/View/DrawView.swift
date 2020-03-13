@@ -39,21 +39,11 @@ final class DrawView: UIView {
         view.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         addSubview(view)
         
-        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
-        addRectLayer(p: CGPoint(x: animation1.fromX, y: animation1.fromY) )
-        animations.append(animation1)
-        
-        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
-        addRectLayer(p: CGPoint(x: animation2.fromX, y: animation2.fromY) )
-        animations.append(animation2)
-        
-        
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
     
     //
     func loadNib() {
@@ -62,6 +52,14 @@ final class DrawView: UIView {
         view.frame = self.bounds
         view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         addSubview(view)
+    }
+    
+    func updateAnimations(animations: [AnimationLayer]){
+        self.animations = animations
+        for animation in animations {
+            addRectLayer(p: CGPoint(x: animation.fromX, y: animation.fromY) )
+        }
+        
     }
     
     func update(_ timerCount: Double){
