@@ -90,7 +90,8 @@ final class PostListViewController: UIViewController {
     
     fileprivate func moveNextVC(indexPath: IndexPath) {
         
-        let nextVC = EditViewController()
+        let nextVC = EditViewController(project: projects[indexPath.item])
+        nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true, completion: nil)
     }
     

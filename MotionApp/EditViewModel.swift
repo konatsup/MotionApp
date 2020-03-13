@@ -45,6 +45,8 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     var animationsRelay = PublishRelay<[AnimationLayer]>()
     var animations: [AnimationLayer] = []
     
+    var vcStateRelay = PublishRelay<String>()
+    
     init() {
         databaseRef = Database.database().reference()
         //        databaseRef.observe(.childAdded, with: { snapshot in
@@ -90,6 +92,7 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
         testBtnTapped.bind(to: Binder(self) {me, _ in
             print("test")
             me.initAnimations(animations: me.animations)
+            me.vcStateRelay.accept("popViewController")
             
         }).disposed(by: disposeBag)
         

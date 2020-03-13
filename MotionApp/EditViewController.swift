@@ -39,11 +39,23 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
     
     private let disposeBag = DisposeBag()
     lazy var label = UILabel()
+    var project: Project
     
     let viewModel = EditViewModel()
     
+    init(project: Project) {
+        self.project = project
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
         
         //        viewModel.entityRelay
         //            .asDriver(onErrorJustReturn: Entity())
@@ -65,6 +77,15 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
             .asDriver(onErrorJustReturn: [])
             .drive(Binder(self) {me, animations in
                 me.drawView.updateAnimations(animations: animations)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.vcStateRelay
+            .asDriver(onErrorJustReturn: "")
+            .drive(Binder(self) {me, state in
+                print(state)
+//                me.navigationController?.popViewController(animated: true)
+                self.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
         
@@ -147,16 +168,15 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
             make.center.equalTo(self.view.snp.center)
         }
         
-        var animations: [AnimationLayer] = []
-        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
-        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
-        animations.append(animation1)
-        animations.append(animation2)
+//        var animations: [AnimationLayer] = []
+//        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
+//        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
+//        animations.append(animation1)
+//        animations.append(animation2)
         
+        let animations = self.project.animations
         viewModel.initAnimations(animations: animations)
-        
-        //        countBtn.rx.tap.bind(to: viewModel.btnTapped).disposed(by: disposeBag)
-        
+                
     }
     
 }
