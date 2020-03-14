@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TestViewController: UIViewController, UIScrollViewDelegate {
+class TestViewController: UIViewController, UITableViewDelegate, UIScrollViewDelegate {
     // UIPageControl.
     var pageControl: UIPageControl!
     // UIScrillView.
@@ -30,38 +30,38 @@ class TestViewController: UIViewController, UIScrollViewDelegate {
         let width = self.view.frame.maxX, height = self.view.frame.maxY
 
         // ScrollViewHeaderの設定.
-        scrollViewHeader = UIScrollView(frame: self.view.frame)
+        scrollViewHeader = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/3))
         scrollViewHeader.showsHorizontalScrollIndicator = false
         scrollViewHeader.showsVerticalScrollIndicator = false
-        scrollViewHeader.isPagingEnabled = true
+//        scrollViewHeader.isPagingEnabled = true
         scrollViewHeader.delegate = self
         scrollViewHeader.contentSize = CGSize(width:CGFloat(pageSize) * width, height:0)
         self.view.addSubview(scrollViewHeader)
 
         // ScrollViewMainの設定.
-        scrollViewMain = UIScrollView(frame: self.view.frame)
-        scrollViewMain.showsHorizontalScrollIndicator = false
-        scrollViewMain.showsVerticalScrollIndicator = false
-        scrollViewMain.isPagingEnabled = true
-        scrollViewMain.delegate = self
-        scrollViewMain.contentSize = CGSize(width:CGFloat(pageSize) * width, height:0)
-        self.view.addSubview(scrollViewMain)
+//        scrollViewMain = UIScrollView(frame: self.view.frame)
+//        scrollViewMain.showsHorizontalScrollIndicator = false
+//        scrollViewMain.showsVerticalScrollIndicator = false
+//        scrollViewMain.isPagingEnabled = true
+//        scrollViewMain.delegate = self
+//        scrollViewMain.contentSize = CGSize(width:CGFloat(pageSize) * width, height:0)
+//        self.view.addSubview(scrollViewMain)
 
         // ScrollView1に貼付けるLabelの生成.
-        for i in 0 ..< pageSize {
-
-            //ページごとに異なるラベルを表示.
-            let myLabel:UILabel = UILabel(frame: CGRect(x:CGFloat(i)*width+width/2-40, y:height/2 - 40, width:80, height:80))
-            myLabel.backgroundColor = UIColor.black
-            myLabel.textColor = UIColor.white
-            myLabel.textAlignment = NSTextAlignment.center
-            myLabel.layer.masksToBounds = true
-            myLabel.text = "Page\(i)"
-            myLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-            myLabel.layer.cornerRadius = 40.0
-
-            scrollViewMain.addSubview(myLabel)
-        }
+//        for i in 0 ..< pageSize {
+//
+//            //ページごとに異なるラベルを表示.
+//            let myLabel:UILabel = UILabel(frame: CGRect(x:CGFloat(i)*width+width/2-40, y:height/2 - 40, width:80, height:80))
+//            myLabel.backgroundColor = UIColor.black
+//            myLabel.textColor = UIColor.white
+//            myLabel.textAlignment = NSTextAlignment.center
+//            myLabel.layer.masksToBounds = true
+//            myLabel.text = "Page\(i)"
+//            myLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+//            myLabel.layer.cornerRadius = 40.0
+//
+//            scrollViewMain.addSubview(myLabel)
+//        }
 
         // ScrollView2に貼付ける Labelの生成.
         for i in 0 ..< pageSize {
@@ -80,17 +80,17 @@ class TestViewController: UIViewController, UIScrollViewDelegate {
         }
 
         // PageControlを作成.
-        pageControl = UIPageControl(frame: CGRect(x:0, y:self.view.frame.maxY - 50, width:width, height:50))
-        pageControl.backgroundColor = UIColor.lightGray
-
-        // PageControlするページ数を設定.
-        pageControl.numberOfPages = pageSize
-
-        // 現在ページを設定.
-        pageControl.currentPage = 0
-        pageControl.isUserInteractionEnabled = false
-
-        self.view.addSubview(pageControl)
+//        pageControl = UIPageControl(frame: CGRect(x:0, y:self.view.frame.maxY - 50, width:width, height:50))
+//        pageControl.backgroundColor = UIColor.lightGray
+//
+//        // PageControlするページ数を設定.
+//        pageControl.numberOfPages = pageSize
+//
+//        // 現在ページを設定.
+//        pageControl.currentPage = 0
+//        pageControl.isUserInteractionEnabled = false
+//
+//        self.view.addSubview(pageControl)
     }
 
     /*
@@ -98,7 +98,7 @@ class TestViewController: UIViewController, UIScrollViewDelegate {
      */
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == scrollViewMain {
-            scrollViewHeader.contentOffset.x = scrollViewMain.contentOffset.x
+//            scrollViewHeader.contentOffset.x = scrollViewMain.contentOffset.x
         }
     }
 

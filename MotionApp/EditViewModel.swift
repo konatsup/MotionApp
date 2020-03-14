@@ -31,6 +31,7 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     
     //input
     var btnTapped = PublishRelay<Void>()
+    var stopBtnTapped = PublishRelay<Void>()
     var uploadBtnTapped = PublishRelay<Void>()
     var testBtnTapped = PublishRelay<Void>()
     
@@ -58,8 +59,16 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
         
         btnTapped.bind(to: Binder(self) {me, _ in
             
-            if !self.timer.isValid {
-                self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.up), userInfo: nil,  repeats: true)
+            if !me.timer.isValid {
+                me.timer = Timer.scheduledTimer(timeInterval: 0.01, target: me, selector: #selector(me.up), userInfo: nil,  repeats: true)
+            }
+        }).disposed(by: disposeBag)
+        
+        stopBtnTapped.bind(to: Binder(self) {me, _ in
+            
+            if me.timer.isValid {
+                me.timerCount = 0
+                me.timer.invalidate()
             }
             //            let opacity = 10
             //            me.e.opacity += 10

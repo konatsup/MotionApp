@@ -19,6 +19,9 @@ class Project {
         let animations = dict["animations"] as! [Any]
         self.animations = animations.map { AnimationLayer(dict: $0 as! [String : Any]) }
     }
+    init(animations: [AnimationLayer]){
+        self.animations = animations
+    }
 }
 
 final class PostListViewModel {

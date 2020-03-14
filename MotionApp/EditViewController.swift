@@ -43,13 +43,34 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
     
     let viewModel = EditViewModel()
     
+    //    init(project: Project) {
+    //        var animations: [AnimationLayer] = []
+    //        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
+    //        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
+    //        animations.append(animation1)
+    //        animations.append(animation2)
+    //        let p = Project(animations: animations)
+    //        self.project = p
+    
+    //        self.project = project
+    //        super.init(nibName: nil, bundle: nil)
+    //    }
+    
     init(project: Project) {
         self.project = project
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        var animations: [AnimationLayer] = []
+        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
+        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
+        animations.append(animation1)
+        animations.append(animation2)
+        let p = Project(animations: animations)
+        self.project = p
+        super.init(coder: aDecoder)
+        //        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -84,7 +105,7 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
             .asDriver(onErrorJustReturn: "")
             .drive(Binder(self) {me, state in
                 print(state)
-//                me.navigationController?.popViewController(animated: true)
+                //                me.navigationController?.popViewController(animated: true)
                 self.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
@@ -98,21 +119,50 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
         //        }
         //        spreadSheetView.reloadData()
         
+        drawView = DrawView()
+        self.view.addSubview(drawView)
+        
+        drawView.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.view.snp.top)
+            make.width.equalTo(self.view.snp.width)
+            make.height.equalTo(self.view.snp.height).dividedBy(2)
+            make.center.equalTo(self.view.snp.center)
+        }
+        
         let button = UIButton()
         button.backgroundColor = .red
         button.setTitle("start", for: .normal)
         view.addSubview(button)
         
         button.snp.makeConstraints { (make) in
-            make.top.equalTo(600)
-            make.center.equalTo(self.view.center)
-            make.width.equalTo(200)
-            make.height.equalTo(50)
+            make.top.equalTo(400)
+            make.left.equalTo(100)
+            
+            //            make.center.equalTo(self.view.center)
+            make.width.equalTo(50)
+            make.height.equalTo(20)
         }
-        
         button.rx.tap
             .bind(to: viewModel.btnTapped)
             .disposed(by: disposeBag)
+        
+        let stopButton = UIButton()
+        stopButton.backgroundColor = .orange
+        stopButton.setTitle("stop", for: .normal)
+        view.addSubview(stopButton)
+        
+        stopButton.snp.makeConstraints { (make) in
+            make.top.equalTo(400)
+            make.left.equalTo(150)
+            
+            //            make.center.equalTo(self.view.center)
+            make.width.equalTo(50)
+            make.height.equalTo(20)
+        }
+        stopButton.rx.tap
+            .bind(to: viewModel.stopBtnTapped)
+            .disposed(by: disposeBag)
+        
         
         let uploadButton = UIButton()
         uploadButton.backgroundColor = .green
@@ -120,10 +170,11 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
         view.addSubview(uploadButton)
         
         uploadButton.snp.makeConstraints { (make) in
-            make.top.equalTo(700)
-            make.center.equalTo(self.view.center)
-            make.width.equalTo(200)
-            make.height.equalTo(50)
+            make.top.equalTo(400)
+            //            make.center.equalTo(self.view.center)
+            make.left.equalTo(0)
+            make.width.equalTo(50)
+            make.height.equalTo(20)
         }
         
         uploadButton.rx.tap
@@ -136,10 +187,11 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
         view.addSubview(testButton)
         
         testButton.snp.makeConstraints { (make) in
-            make.top.equalTo(800)
-            make.center.equalTo(self.view.center)
-            make.width.equalTo(200)
-            make.height.equalTo(50)
+            make.top.equalTo(400)
+            make.left.equalTo(50)
+            //            make.center.equalTo(self.view.center)
+            make.width.equalTo(50)
+            make.height.equalTo(20)
         }
         
         testButton.rx.tap
@@ -158,25 +210,16 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
             make.height.equalTo(20)
         }
         
-        drawView = DrawView()
-        self.view.addSubview(drawView)
         
-        drawView.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.view.snp.top)
-            make.width.equalTo(self.view.snp.width)
-            make.height.equalTo(self.view.snp.height).dividedBy(2)
-            make.center.equalTo(self.view.snp.center)
-        }
-        
-//        var animations: [AnimationLayer] = []
-//        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
-//        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
-//        animations.append(animation1)
-//        animations.append(animation2)
+        //        var animations: [AnimationLayer] = []
+        //        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
+        //        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
+        //        animations.append(animation1)
+        //        animations.append(animation2)
         
         let animations = self.project.animations
         viewModel.initAnimations(animations: animations)
-                
+        
     }
     
 }
