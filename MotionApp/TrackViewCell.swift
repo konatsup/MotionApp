@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TrackViewCell: UITableViewCell , UIScrollViewDelegate{
+class TrackViewCell: UITableViewCell , UIScrollViewDelegate {
     @IBOutlet var label: UILabel!
     @IBOutlet var scrollView: UIScrollView!
     

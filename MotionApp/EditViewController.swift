@@ -13,27 +13,34 @@ import SnapKit
 import SpreadsheetView
 //import Firebase
 
-class EditViewController: UIViewController, SpreadsheetViewDelegate{
+class EditViewController: UIViewController, UITableViewDelegate {
     //    var spreadsheetView: SpreadsheetView!
     
     private lazy var dataSource = EditViewDataSource()
-    private lazy var spreadSheetView: SpreadsheetView = {
-        let spreadSheetView = SpreadsheetView()
-        spreadSheetView.translatesAutoresizingMaskIntoConstraints = false
-        spreadSheetView.backgroundColor = .white
-        spreadSheetView.dataSource = dataSource
-        spreadSheetView.delegate = self
-        spreadSheetView.stickyRowHeader = true
-        spreadSheetView.stickyColumnHeader = true
-        spreadSheetView.bounces = false
-        spreadSheetView.isDirectionalLockEnabled = true
-        //        spreadSheetView.gridStyle = .default
-        spreadSheetView.register(HeaderCell.self, forCellWithReuseIdentifier: String(describing: HeaderCell.self))
-        spreadSheetView.register(TimeMeterCell.self, forCellWithReuseIdentifier: String(describing: TimeMeterCell.self))
-        spreadSheetView.register(TextCell.self, forCellWithReuseIdentifier: String(describing: TextCell.self))
-        return spreadSheetView
-    }()
+    //        private lazy var spreadSheetView: SpreadsheetView = {
+    //            let spreadSheetView = SpreadsheetView()
+    //            spreadSheetView.translatesAutoresizingMaskIntoConstraints = false
+    //            spreadSheetView.backgroundColor = .white
+    //            spreadSheetView.dataSource = dataSource
+    //            spreadSheetView.delegate = self
+    //            spreadSheetView.stickyRowHeader = true
+    //            spreadSheetView.stickyColumnHeader = true
+    //            spreadSheetView.bounces = false
+    //            spreadSheetView.isDirectionalLockEnabled = true
+    //            //        spreadSheetView.gridStyle = .default
+    //            spreadSheetView.register(HeaderCell.self, forCellWithReuseIdentifier: String(describing: HeaderCell.self))
+    //            spreadSheetView.register(TimeMeterCell.self, forCellWithReuseIdentifier: String(describing: TimeMeterCell.self))
+    //            spreadSheetView.register(TextCell.self, forCellWithReuseIdentifier: String(describing: TextCell.self))
+    //            return spreadSheetView
+    //        }()
     
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "TrackViewCell", bundle: nil), forCellReuseIdentifier: "TrackViewCell")
+        return tableView
+    }()
     
     var drawView: DrawView!
     
@@ -119,6 +126,8 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
         //        }
         //        spreadSheetView.reloadData()
         
+
+        
         drawView = DrawView()
         self.view.addSubview(drawView)
         
@@ -129,6 +138,15 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
             make.center.equalTo(self.view.snp.center)
         }
         
+        self.view.addSubview(tableView)
+        tableView.snp.makeConstraints { (make) -> Void in
+            make.bottom.equalTo(self.view.snp.bottom)
+            make.height.equalTo(self.view.snp.height).dividedBy(2)
+            make.width.equalTo(self.view.snp.width)
+            make.center.equalTo(self.view.snp.center)
+        }
+        
+        
         let button = UIButton()
         button.backgroundColor = .red
         button.setTitle("start", for: .normal)
@@ -137,8 +155,6 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
         button.snp.makeConstraints { (make) in
             make.top.equalTo(400)
             make.left.equalTo(100)
-            
-            //            make.center.equalTo(self.view.center)
             make.width.equalTo(50)
             make.height.equalTo(20)
         }
@@ -154,8 +170,6 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
         stopButton.snp.makeConstraints { (make) in
             make.top.equalTo(400)
             make.left.equalTo(150)
-            
-            //            make.center.equalTo(self.view.center)
             make.width.equalTo(50)
             make.height.equalTo(20)
         }
@@ -171,7 +185,6 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
         
         uploadButton.snp.makeConstraints { (make) in
             make.top.equalTo(400)
-            //            make.center.equalTo(self.view.center)
             make.left.equalTo(0)
             make.width.equalTo(50)
             make.height.equalTo(20)
@@ -224,3 +237,19 @@ class EditViewController: UIViewController, SpreadsheetViewDelegate{
     
 }
 
+extension EditViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TrackViewCell") as! TrackViewCell
+        
+        cell.label.text = "\(indexPath.section)"
+        //s    }
+        //        cell.textLabel?.text = "section:[\(indexPath.section)], row:[\(indexPath.row)]"
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 100
+    }
+    
+    
+}

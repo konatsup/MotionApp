@@ -6,12 +6,12 @@
 //  Copyright © 2020 konatsup. All rights reserved.
 //
 
-import UIKit
-class TrackCell: UITableViewCell {
-    @IBOutlet weak var leftLabel: UILabel!
-    @IBOutlet weak var scrollView: UIScrollView!
-    
-    func setData(indexPath: IndexPath){
-        self.leftLabel.text = String((indexPath.row)+1)
-    }
-}
+//import UIKit
+//class TrackCell: UITableViewCell {
+//    @IBOutlet weak var leftLabel: UILabel!
+//    @IBOutlet weak var scrollView: UIScrollView!
+//
+//    func setData(indexPath: IndexPath){
+//        self.leftLabel.text = String((indexPath.row)+1)
+//    }
+//}
