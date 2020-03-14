@@ -16,27 +16,8 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xl3-8a-vWm">
-                        <rect key="frame" x="10" y="12" width="42" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcV-gl-GwA">
-                        <rect key="frame" x="66" y="0.0" width="254" height="44"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <viewLayoutGuide key="contentLayoutGuide" id="X7Z-CI-ENs"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="VHD-jZ-wcm"/>
-                    </scrollView>
-                </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
-            <connections>
-                <outlet property="label" destination="xl3-8a-vWm" id="sAS-gN-GOA"/>
-                <outlet property="scrollView" destination="kcV-gl-GwA" id="ua8-tb-hzS"/>
-            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="148.66071428571428"/>
         </tableViewCell>
     </objects>

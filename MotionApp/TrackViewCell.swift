@@ -7,14 +7,21 @@
 //
 
 import UIKit
+import SnapKit
 
-class TrackViewCell: UITableViewCell , UIScrollViewDelegate {
-    @IBOutlet var label: UILabel!
-    @IBOutlet var scrollView: UIScrollView!
+class TrackViewCell: UITableViewCell, UIScrollViewDelegate {
+    var label: UILabel = UILabel()
+    var scrollView: UIScrollView = UIScrollView()
+    var viewModel: EditViewModel = EditViewModel()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        scrollView.delegate = self
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.setCell()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setCell()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -22,8 +29,54 @@ class TrackViewCell: UITableViewCell , UIScrollViewDelegate {
     }
     
     func setCell() {
-        self.label.text = "aaaaaa"
-        //      self.scrollView = station.prefecture as String
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: 100))
+        scrollView.delegate = self
+        scrollView.backgroundColor = .blue
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        
+        let width = self.contentView.frame.maxX
+        let pageSize = 10
+        scrollView.contentSize = CGSize(width:CGFloat(pageSize) * width, height:0)
+        
+        self.contentView.addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.contentView.snp.top)
+            make.width.equalTo(self.contentView.snp.width)
+            make.height.equalTo(self.contentView.snp.height)
+            make.center.equalTo(self.contentView.snp.center)
+        }
+        
+        print(width)
+        for i in 0 ..< pageSize {
+            
+            //ページごとに異なるラベルを表示.
+            let myLabel:UILabel = UILabel(frame: CGRect(x:CGFloat(i)*width/4, y:0, width:80, height:20))
+            myLabel.backgroundColor = UIColor.red
+            myLabel.textColor = UIColor.white
+            myLabel.textAlignment = NSTextAlignment.center
+            myLabel.layer.masksToBounds = true
+            myLabel.text = "Page\(i)"
+            myLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+            myLabel.layer.cornerRadius = 30.0
+            
+            scrollView.addSubview(myLabel)
+        }
+        
+        label = UILabel()
+        //        label.text = "aaaaaa"
+        label.font = label.font.withSize(50)
+        self.contentView.addSubview(label)
+        label.snp.makeConstraints { (make) -> Void in
+            make.left.equalTo(self.contentView.snp.left)
+            //            make.width.equalTo(self.contentView.snp.width)
+            make.height.equalTo(self.contentView.snp.height)
+            //            make.center.equalTo(self.contentView.snp.center)
+        }
+        
+        //        scrollViewList.append(scrollView)
+        
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -36,6 +89,12 @@ class TrackViewCell: UITableViewCell , UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("scrollViewDidScroll")
+//        print("scrollViewDidScroll")
+        self.viewModel.scrollViewOffsetChanged(offsetX: scrollView.contentOffset.x)
     }
+    
+    func setScrollOffset(offsetX: CGFloat){
+        self.scrollView.contentOffset.x = offsetX
+    }
+    
 }

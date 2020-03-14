@@ -24,6 +24,7 @@ class TestViewController: UIViewController, UITableViewDelegate, UIScrollViewDel
         tableView = UITableView(frame: self.view.bounds, style: .plain)
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.dataSource = self
+        self.tableView.allowsSelection = false
         tableView.register(UINib(nibName: "TrackViewCell", bundle: nil), forCellReuseIdentifier: "TrackViewCell")
         self.view.addSubview(tableView)
         // 画面サイズの取得.

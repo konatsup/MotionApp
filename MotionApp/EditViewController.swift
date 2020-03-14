@@ -13,7 +13,7 @@ import SnapKit
 import SpreadsheetView
 //import Firebase
 
-class EditViewController: UIViewController, UITableViewDelegate {
+class EditViewController: UIViewController{
     //    var spreadsheetView: SpreadsheetView!
     
     private lazy var dataSource = EditViewDataSource()
@@ -38,6 +38,7 @@ class EditViewController: UIViewController, UITableViewDelegate {
         let tableView = UITableView(frame: self.view.bounds, style: .plain)
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.dataSource = self
+        tableView.allowsSelection = false
         tableView.register(UINib(nibName: "TrackViewCell", bundle: nil), forCellReuseIdentifier: "TrackViewCell")
         return tableView
     }()
@@ -50,18 +51,8 @@ class EditViewController: UIViewController, UITableViewDelegate {
     
     let viewModel = EditViewModel()
     
-    //    init(project: Project) {
-    //        var animations: [AnimationLayer] = []
-    //        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
-    //        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
-    //        animations.append(animation1)
-    //        animations.append(animation2)
-    //        let p = Project(animations: animations)
-    //        self.project = p
-    
-    //        self.project = project
-    //        super.init(nibName: nil, bundle: nil)
-    //    }
+    var scrollViews: [UIScrollView] = []
+    var trackViewCells: [TrackViewCell] = []
     
     init(project: Project) {
         self.project = project
@@ -114,6 +105,16 @@ class EditViewController: UIViewController, UITableViewDelegate {
                 print(state)
                 //                me.navigationController?.popViewController(animated: true)
                 self.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.scrollOffsetRelay
+            .asDriver(onErrorJustReturn: 0.0)
+            .drive(Binder(self) {me, offsetX in
+                for cell in me.trackViewCells {
+//                    cell.scrollView.contentOffset.x = offsetX
+                    cell.setScrollOffset(offsetX: offsetX)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -196,7 +197,7 @@ class EditViewController: UIViewController, UITableViewDelegate {
         
         let testButton = UIButton()
         testButton.backgroundColor = .blue
-        testButton.setTitle("test", for: .normal)
+        testButton.setTitle("close", for: .normal)
         view.addSubview(testButton)
         
         testButton.snp.makeConstraints { (make) in
@@ -241,15 +242,25 @@ extension EditViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TrackViewCell") as! TrackViewCell
         
-        cell.label.text = "\(indexPath.section)"
-        //s    }
-        //        cell.textLabel?.text = "section:[\(indexPath.section)], row:[\(indexPath.row)]"
+        cell.label.text = "\(indexPath.item)"
+//                cell.textLabel?.text = "section:[\(indexPath.section)], row:[\(indexPath.row)]"
+//        scrollViews.append(cell.scrollView)
+        cell.viewModel = self.viewModel
+        trackViewCells.append(cell)
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 100
     }
+    
+//    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+//
+//        if indexPath.row == 3 {
+//            return nil
+//        }
+//        return indexPath
+//    }
     
     
 }

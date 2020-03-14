@@ -48,6 +48,8 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     
     var vcStateRelay = PublishRelay<String>()
     
+    var scrollOffsetRelay = PublishRelay<CGFloat>()
+    
     init() {
         databaseRef = Database.database().reference()
         //        databaseRef.observe(.childAdded, with: { snapshot in
@@ -113,6 +115,10 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
         self.animations = animations
         self.animationsRelay.accept(animations)
         print("editVC initAnimatons")
+    }
+    
+    func scrollViewOffsetChanged(offsetX: CGFloat){
+        self.scrollOffsetRelay.accept(offsetX)
     }
     
     @objc func up() {
