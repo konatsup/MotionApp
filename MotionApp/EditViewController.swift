@@ -36,7 +36,7 @@ class EditViewController: UIViewController{
         timeMeterView.showsVerticalScrollIndicator = false
         timeMeterView.isDirectionalLockEnabled = true
         let width = self.view.frame.maxX
-        timeMeterView.contentSize = CGSize(width:CGFloat(self.pageSize) * width, height: self.timeMeterHeight)
+        timeMeterView.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth, height: self.timeMeterHeight)
         
         return timeMeterView
     }()
@@ -49,7 +49,7 @@ class EditViewController: UIViewController{
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isDirectionalLockEnabled = true
         let width = self.view.frame.maxX
-        scrollView.contentSize = CGSize(width:CGFloat(self.pageSize) * width, height:4000)
+        scrollView.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth, height: CGFloat(self.trackCount + 1) * self.trackHeight)
         
         return scrollView
     }()
@@ -68,9 +68,11 @@ class EditViewController: UIViewController{
     let timeMeterHeight: CGFloat = 50
     let buttonHeight = 50
     let buttonWidth = 80
-    let pageSize = 10
+    let maxDuration: CGFloat = 100
     let sideCellWidth: CGFloat = 50.0
-    
+    let divisionWidth: CGFloat = 20
+    let trackHeight: CGFloat = 50
+    let trackCount: Int = 20
     
     init(project: Project) {
         self.project = project
@@ -168,34 +170,49 @@ class EditViewController: UIViewController{
         }
         
         let width = self.view.frame.width
-        for j in 0 ..< 20 {
-            for i in 0 ..< self.pageSize {
+        for j in 0 ..< trackCount {
+            for i in 0 ..< Int(self.maxDuration) {
                 //ページごとに異なるラベルを表示.
-                let myLabel:UILabel = UILabel(frame: CGRect(x:CGFloat(i)*width/4, y:CGFloat(j)*50, width:80, height:50))
-                myLabel.backgroundColor = UIColor.red
-                myLabel.textColor = UIColor.white
-                myLabel.textAlignment = NSTextAlignment.center
-                myLabel.layer.masksToBounds = true
-                myLabel.text = "Page\(j) : \(i)"
-                myLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-                myLabel.layer.cornerRadius = 30.0
+                //                let myLabel:UILabel = UILabel(frame: CGRect(x:CGFloat(i)*width/4, y:CGFloat(j)*50, width:80, height:50))
+                //                myLabel.backgroundColor = UIColor.red
+                //                myLabel.textColor = UIColor.white
+                //                myLabel.textAlignment = NSTextAlignment.center
+                //                myLabel.layer.masksToBounds = true
+                //                myLabel.text = "Page\(j) : \(i)"
+                //                myLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+                //                myLabel.layer.cornerRadius = 30.0
                 
-                scrollViewMain.addSubview(myLabel)
+                
+                //                scrollViewMain.addSubview(myLabel)
             }
         }
         
-        for i in 0 ..< self.pageSize {
+        let drawLayer = MyShapeLayer()
+        drawLayer.frame = CGRect(x: 0, y: 0, width: divisionWidth * maxDuration, height: timeMeterHeight)
+        timeMeterView.layer.addSublayer(drawLayer)
+        for i in 0 ..< Int(self.maxDuration) {
             //ページごとに異なるラベルを表示.
-            let myLabel:UILabel = UILabel(frame: CGRect(x:CGFloat(i)*width/4, y: 0, width:80, height: timeMeterHeight))
-            myLabel.backgroundColor = UIColor.yellow
-            myLabel.textColor = UIColor.white
-            myLabel.textAlignment = NSTextAlignment.center
-            myLabel.layer.masksToBounds = true
-            myLabel.text = "Page\(i)"
-            myLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-            myLabel.layer.cornerRadius = 30.0
+            let index = CGFloat(i)
+            let x = index * divisionWidth
+            var y: CGFloat = 0
+            var height: CGFloat = 0
+            var lineWidth: CGFloat = 1
+            switch (index.truncatingRemainder(dividingBy: 10)) {
+            case 0:
+                y = 20
+                height = timeMeterHeight - y
+                lineWidth = 2
+            case 5:
+                y = 25
+                height = timeMeterHeight - y
+                lineWidth = 1.5
+            default:
+                y = 40
+                height = timeMeterHeight - y
+                lineWidth = 1
+            }
+            drawLayer.drawDivisionBar(x: x, y: y, height: height, lineWidth: lineWidth)
             
-            timeMeterView.addSubview(myLabel)
         }
         
         let button = UIButton()
@@ -306,7 +323,7 @@ extension EditViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return trackCount
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {

@@ -18,6 +18,15 @@ class MyShapeLayer: CALayer {
         self.addSublayer(rect)
     }
     
+    func drawDivisionBar(x: CGFloat, y: CGFloat, height: CGFloat, lineWidth:CGFloat){
+        let rect = CAShapeLayer()
+        rect.strokeColor = UIColor.black.cgColor
+        rect.fillColor = UIColor.clear.cgColor
+        rect.lineWidth = lineWidth
+        rect.path = UIBezierPath(rect:CGRect(x: x, y: y, width: lineWidth, height: height)).cgPath
+        self.addSublayer(rect)
+    }
+    
     func drawOval(lineWidth:CGFloat){
         let ovalShapeLayer = CAShapeLayer()
         ovalShapeLayer.strokeColor = UIColor.blue.cgColor

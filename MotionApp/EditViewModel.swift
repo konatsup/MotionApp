@@ -27,6 +27,8 @@ struct Entity {
 final class EditViewModel: ViewModelInput, ViewModelOutput {
     private let disposeBag = DisposeBag()
     
+    private let timeInterval = 0.1
+    
     var databaseRef: DatabaseReference!
     
     //input
@@ -62,7 +64,7 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
         btnTapped.bind(to: Binder(self) {me, _ in
             
             if !me.timer.isValid {
-                me.timer = Timer.scheduledTimer(timeInterval: 0.01, target: me, selector: #selector(me.up), userInfo: nil,  repeats: true)
+                me.timer = Timer.scheduledTimer(timeInterval: me.timeInterval, target: me, selector: #selector(me.up), userInfo: nil,  repeats: true)
             }
         }).disposed(by: disposeBag)
         
@@ -122,7 +124,7 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     }
     
     @objc func up() {
-        timerCount += 0.01
+        timerCount += self.timeInterval
         print(timerCount)
         self.timerCountRelay.accept(timerCount)
     }
