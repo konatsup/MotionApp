@@ -38,12 +38,32 @@ class EditViewController: UIViewController{
         let tableView = UITableView(frame: self.view.bounds, style: .plain)
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.dataSource = self
-        tableView.allowsSelection = false
+        tableView.backgroundColor = .darkGray
+        tableView.allowsSelection = true
+//        tableView.isEditing = true
+//        tableView.allowsSelectionDuringEditing = false
         tableView.register(UINib(nibName: "TrackViewCell", bundle: nil), forCellReuseIdentifier: "TrackViewCell")
         return tableView
     }()
     
     var drawView: DrawView!
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/2))
+        scrollView.delegate = self
+        scrollView.backgroundColor = .blue
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.isDirectionalLockEnabled = true
+        let width = self.view.frame.maxX
+        let pageSize = 10
+        scrollView.contentSize = CGSize(width:CGFloat(pageSize) * width, height:4000)
+        
+        
+        return scrollView
+    }()
+    
+    var scrollBeginingPoint: CGPoint!
     
     private let disposeBag = DisposeBag()
     lazy var label = UILabel()
@@ -53,6 +73,8 @@ class EditViewController: UIViewController{
     
     var scrollViews: [UIScrollView] = []
     var trackViewCells: [TrackViewCell] = []
+    
+    let timeMeterHeight = 50
     
     init(project: Project) {
         self.project = project
@@ -112,8 +134,8 @@ class EditViewController: UIViewController{
             .asDriver(onErrorJustReturn: 0.0)
             .drive(Binder(self) {me, offsetX in
                 for cell in me.trackViewCells {
-//                    cell.scrollView.contentOffset.x = offsetX
-                    cell.setScrollOffset(offsetX: offsetX)
+                    //                    cell.scrollView.contentOffset.x = offsetX
+                    //                    cell.setScrollOffset(offsetX: offsetX)
                 }
             })
             .disposed(by: disposeBag)
@@ -127,7 +149,7 @@ class EditViewController: UIViewController{
         //        }
         //        spreadSheetView.reloadData()
         
-
+        
         
         drawView = DrawView()
         self.view.addSubview(drawView)
@@ -142,11 +164,38 @@ class EditViewController: UIViewController{
         self.view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) -> Void in
             make.bottom.equalTo(self.view.snp.bottom)
-            make.height.equalTo(self.view.snp.height).dividedBy(2)
+            make.height.equalTo(self.view.snp.height).dividedBy(2).offset(-timeMeterHeight)
             make.width.equalTo(self.view.snp.width)
             make.center.equalTo(self.view.snp.center)
         }
         
+//        self.view.addSubview(scrollView)
+//        scrollView.snp.makeConstraints { (make) -> Void in
+//            make.bottom.equalTo(self.view.snp.bottom)
+//            make.height.equalTo(self.view.snp.height).dividedBy(2)
+//            make.width.equalTo(self.view.snp.width)
+//
+//            make.left.equalTo(self.view.snp.left).offset(50.0)
+//            make.center.equalTo(self.view.snp.center)
+//        }
+        
+        let pageSize = 10
+        let width = self.view.frame.width
+        for j in 0 ..< 100 {
+            for i in 0 ..< pageSize {
+                //ページごとに異なるラベルを表示.
+                let myLabel:UILabel = UILabel(frame: CGRect(x:CGFloat(i)*width/4, y:CGFloat(j)*50, width:80, height:50))
+                myLabel.backgroundColor = UIColor.red
+                myLabel.textColor = UIColor.white
+                myLabel.textAlignment = NSTextAlignment.center
+                myLabel.layer.masksToBounds = true
+                myLabel.text = "Page\(i)"
+                myLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+                myLabel.layer.cornerRadius = 30.0
+                
+                scrollView.addSubview(myLabel)
+            }
+        }
         
         let button = UIButton()
         button.backgroundColor = .red
@@ -203,7 +252,6 @@ class EditViewController: UIViewController{
         testButton.snp.makeConstraints { (make) in
             make.top.equalTo(400)
             make.left.equalTo(50)
-            //            make.center.equalTo(self.view.center)
             make.width.equalTo(50)
             make.height.equalTo(20)
         }
@@ -212,7 +260,6 @@ class EditViewController: UIViewController{
             .bind(to: viewModel.testBtnTapped)
             .disposed(by: disposeBag)
         
-        //
         label = UILabel()
         label.text = "テキスト"
         self.view.addSubview(label)
@@ -224,13 +271,6 @@ class EditViewController: UIViewController{
             make.height.equalTo(20)
         }
         
-        
-        //        var animations: [AnimationLayer] = []
-        //        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
-        //        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
-        //        animations.append(animation1)
-        //        animations.append(animation2)
-        
         let animations = self.project.animations
         viewModel.initAnimations(animations: animations)
         
@@ -238,15 +278,29 @@ class EditViewController: UIViewController{
     
 }
 
-extension EditViewController: UITableViewDataSource {
+//extension EditViewController: UITableViewDelegate {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print("DAAAAAAAA")
+//        return
+//    }
+
+
+
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        <#code#>
+//    }
+//}
+
+extension EditViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TrackViewCell") as! TrackViewCell
         
         cell.label.text = "\(indexPath.item)"
-//                cell.textLabel?.text = "section:[\(indexPath.section)], row:[\(indexPath.row)]"
-//        scrollViews.append(cell.scrollView)
-        cell.viewModel = self.viewModel
-        trackViewCells.append(cell)
+        cell.backgroundColor = .green
+        //                cell.textLabel?.text = "section:[\(indexPath.section)], row:[\(indexPath.row)]"
+        //        scrollViews.append(cell.scrollView)
+        //        cell.viewModel = self.viewModel
+        //        trackViewCells.append(cell)
         return cell
     }
     
@@ -254,13 +308,66 @@ extension EditViewController: UITableViewDataSource {
         return 100
     }
     
-//    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // TODO: 入れ替え時の処理を実装する（データ制御など）
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//        scrollBeginingPoint = scrollView.contentOffset;
+//    }
 //
-//        if indexPath.row == 3 {
-//            return nil
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        let currentPoint = scrollView.contentOffset
+//        print(currentPoint)
+//        if scrollBeginingPoint.y != currentPoint.y {
+//            self.scrollView.contentOffset.y = currentPoint.y
 //        }
-//        return indexPath
 //    }
     
     
+    //    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    //
+    //        if indexPath.row == 3 {
+    //            return nil
+    //        }
+    //        return indexPath
+    //    }
+}
+
+
+extension EditViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        print("endDragging")
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard scrollView == self.scrollView else { return }
+        print("didEndDecelerating")
+    }
+    //
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        scrollBeginingPoint = scrollView.contentOffset
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("scrollViewDidScroll")
+        //        print(scrollView.contentOffset)
+        let currentPoint = scrollView.contentOffset
+        if scrollBeginingPoint.y != currentPoint.y {
+            self.tableView.contentOffset.y = currentPoint.y
+        }
+
+    }
 }
