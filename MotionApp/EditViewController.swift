@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import Floaty
 
 class EditViewController: UIViewController{
     private lazy var dataSource = EditViewDataSource()
@@ -18,6 +19,7 @@ class EditViewController: UIViewController{
         let tableView = UITableView(frame: self.view.bounds, style: .plain)
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.backgroundColor = .darkGray
         tableView.allowsSelection = true
         tableView.separatorStyle = .singleLine
@@ -28,17 +30,15 @@ class EditViewController: UIViewController{
         return tableView
     }()
     
-    var drawView: DrawView!
-    
     private lazy var timeMeterView: UIScrollView = {
         let timeMeterView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.timeMeterHeight))
         timeMeterView.delegate = self
-        timeMeterView.backgroundColor = .lightGray
+        timeMeterView.backgroundColor = UIColor.whiteColor()
         timeMeterView.showsHorizontalScrollIndicator = false
         timeMeterView.showsVerticalScrollIndicator = false
         timeMeterView.isDirectionalLockEnabled = true
-        let width = self.view.frame.maxX
-        timeMeterView.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth, height: self.timeMeterHeight)
+//        let width = self.view.frame.maxX
+        timeMeterView.contentSize = CGSize(width: CGFloat(self.maxDuration) * self.divisionWidth + self.trackMarginRight, height: self.timeMeterHeight)
         
         return timeMeterView
     }()
@@ -46,15 +46,18 @@ class EditViewController: UIViewController{
     private lazy var scrollViewMain: UIScrollView = {
         let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/2))
         scrollView.delegate = self
-        scrollView.backgroundColor = UIColor(red: 22/255, green: 25/255, blue: 41/255, alpha: 1.0)
+        scrollView.backgroundColor = UIColor.blackColor()
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isDirectionalLockEnabled = true
         let width = self.view.frame.maxX
-        scrollView.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth, height: CGFloat(self.trackCount + 1) * self.trackHeight)
+        scrollView.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth + self.trackMarginRight, height: CGFloat(self.project.animations.count + 1) * self.trackHeight)
         
         return scrollView
     }()
+    
+    
+    var drawView: DrawView!
     
     var scrollBeginingPoint: CGPoint!
     
@@ -66,6 +69,8 @@ class EditViewController: UIViewController{
     
     var scrollViews: [UIScrollView] = []
     var trackViewCells: [TrackViewCell] = []
+    let timeMeterLayer = MyShapeLayer()
+    let trackLayer = MyShapeLayer()
     
     let timeMeterHeight: CGFloat = 50
     let buttonHeight = 50
@@ -74,7 +79,8 @@ class EditViewController: UIViewController{
     let sideCellWidth: CGFloat = 50.0
     let divisionWidth: CGFloat = 10
     let trackHeight: CGFloat = 50
-    let trackCount: Int = 20
+    let trackMarginRight: CGFloat = 500
+    //     trackCount: Int = 20
     
     init(project: Project) {
         self.project = project
@@ -83,8 +89,8 @@ class EditViewController: UIViewController{
     
     required init?(coder aDecoder: NSCoder) {
         var animations: [AnimationLayer] = []
-        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 100, fromY: 100, toX: 300, toY: 600)
-        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 800, toX: 400, toY: 200)
+        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 0, fromY: 100, toX: 300, toY: 200)
+        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 200, toX: 300, toY: 200)
         animations.append(animation1)
         animations.append(animation2)
         let p = Project(animations: animations)
@@ -96,13 +102,6 @@ class EditViewController: UIViewController{
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
-        //        viewModel.entityRelay
-        //            .asDriver(onErrorJustReturn: Entity())
-        //            .drive(Binder(self) {me, entity in
-        //                me.label.text = "\(entity.opacity)"
-        //            })
-        //            .disposed(by: disposeBag)
         
         viewModel.timerCountRelay
             .asDriver(onErrorJustReturn: 0)
@@ -116,7 +115,11 @@ class EditViewController: UIViewController{
         viewModel.animationsRelay
             .asDriver(onErrorJustReturn: [])
             .drive(Binder(self) {me, animations in
+                me.self.renderTrack()
                 me.drawView.updateAnimations(animations: animations)
+                
+                me.tableView.reloadData()
+                me.scrollViewMain.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth, height: CGFloat(self.project.animations.count + 1) * self.trackHeight)
             })
             .disposed(by: disposeBag)
         
@@ -128,15 +131,15 @@ class EditViewController: UIViewController{
             })
             .disposed(by: disposeBag)
         
-        viewModel.scrollOffsetRelay
-            .asDriver(onErrorJustReturn: 0.0)
-            .drive(Binder(self) {me, offsetX in
-                for cell in me.trackViewCells {
-                    //                    cell.scrollView.contentOffset.x = offsetX
-                    //                    cell.setScrollOffset(offsetX: offsetX)
-                }
-            })
-            .disposed(by: disposeBag)
+//        viewModel.scrollOffsetRelay
+//            .asDriver(onErrorJustReturn: 0.0)
+//            .drive(Binder(self) {me, offsetX in
+//                for cell in me.trackViewCells {
+//                    //                    cell.scrollView.contentOffset.x = offsetX
+//                    //                    cell.setScrollOffset(offsetX: offsetX)
+//                }
+//            })
+//            .disposed(by: disposeBag)
         
         drawView = DrawView()
         self.view.addSubview(drawView)
@@ -172,27 +175,12 @@ class EditViewController: UIViewController{
         }
         
         let width = self.view.frame.width
-        let trackLayer = MyShapeLayer()
-        trackLayer.frame = CGRect(x: 0, y: 0, width: divisionWidth * maxDuration, height: CGFloat(self.trackCount + 1) * self.trackHeight)
         scrollViewMain.layer.addSublayer(trackLayer)
-        
-        for i in 0 ..< trackCount {
-//            for j in 0 ..< Int(self.maxDuration) {
-                
-                let i = CGFloat(i)
-                let x: CGFloat = 0
-                let y: CGFloat = i * trackHeight
-                let width = CGFloat(self.maxDuration) * self.divisionWidth
-                let height: CGFloat = trackHeight
-                
-                trackLayer.drawTrack(x: x, y: y, width: width , height: height)
-                
-//            }
-        }
-        
-        let timeMeterLayer = MyShapeLayer()
+
         timeMeterLayer.frame = CGRect(x: 0, y: 0, width: divisionWidth * maxDuration, height: timeMeterHeight)
         timeMeterView.layer.addSublayer(timeMeterLayer)
+        
+        
         for i in 0 ..< Int(self.maxDuration) {
             
             let index = CGFloat(i)
@@ -217,6 +205,12 @@ class EditViewController: UIViewController{
             timeMeterLayer.drawDivisionBar(x: x, y: y, height: height, lineWidth: lineWidth, text: text)
             
         }
+        
+        let floaty = Floaty()
+        floaty.fabDelegate = self
+        floaty.buttonColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1.0)
+        floaty.plusColor = UIColor(red: 22/255, green: 25/255, blue: 41/255, alpha: 1.0)        
+        view.addSubview(floaty)
         
         let button = UIButton()
         button.backgroundColor = .red
@@ -293,24 +287,28 @@ class EditViewController: UIViewController{
         }
         
         let animations = self.project.animations
-        viewModel.initAnimations(animations: animations)
+        viewModel.updateAnimations(animations: animations)
         
+//        rend
     }
     
+    func renderTrack(){
+        for i in 0 ..< self.project.animations.count {
+            print(String(i))
+            let animation = self.project.animations[i]
+            let index = CGFloat(i)
+            let x: CGFloat = divisionWidth * CGFloat(animation.startTime) * 10
+            let y: CGFloat = index * trackHeight
+
+            let duration = animation.endTime - animation.startTime
+            let width: CGFloat = divisionWidth * CGFloat(duration) * 10
+            let height: CGFloat = trackHeight
+            trackLayer.drawTrack(x: x, y: y, width: width, height: height)
+        }
+    }
+    
+    
 }
-
-//extension EditViewController: UITableViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        print("DAAAAAAAA")
-//        return
-//    }
-
-
-
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
-//}
 
 extension EditViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -326,7 +324,7 @@ extension EditViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return trackCount
+        return self.project.animations.count
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -345,26 +343,33 @@ extension EditViewController: UITableViewDataSource, UITableViewDelegate {
         return false
     }
     
-    //    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    //        scrollBeginingPoint = scrollView.contentOffset;
-    //    }
-    //
-    //    func scrollViewDidScroll(scrollView: UIScrollView) {
-    //        let currentPoint = scrollView.contentOffset
-    //        print(currentPoint)
-    //        if scrollBeginingPoint.y != currentPoint.y {
-    //            self.scrollView.contentOffset.y = currentPoint.y
-    //        }
-    //    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print("\(indexPath.row)番目の行が選択されました。")
+        
+        
+    }
     
-    
-    //    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-    //
-    //        if indexPath.row == 3 {
-    //            return nil
-    //        }
-    //        return indexPath
-    //    }
+//        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//            scrollBeginingPoint = scrollView.contentOffset;
+//        }
+//
+//        func scrollViewDidScroll(scrollView: UIScrollView) {
+//            let currentPoint = scrollView.contentOffset
+//            print(currentPoint)
+//            if scrollBeginingPoint.y != currentPoint.y {
+//                self.scrollView.contentOffset.y = currentPoint.y
+//            }
+//        }
+//
+//
+//        func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+//
+//            if indexPath.row == 3 {
+//                return nil
+//            }
+//            return indexPath
+//        }
 }
 
 
@@ -399,5 +404,19 @@ extension EditViewController: UIScrollViewDelegate {
             }
         }
         
+    }
+}
+
+
+extension EditViewController: FloatyDelegate {
+    func emptyFloatySelected(_ floaty: Floaty) {
+        print("FAB clicked")
+        let animation = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 200, toX: 300, toY: 200)
+        self.project.animations.append(animation)
+        self.viewModel.updateAnimations(animations: self.project.animations)
+        
+//        let alert = UIAlertController(title: "FABが押されました", message: nil, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//        present(alert, animated: true, completion: nil)
     }
 }

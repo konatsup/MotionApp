@@ -19,18 +19,18 @@ class MyShapeLayer: CALayer {
     }
     
     func drawDivisionBar(x: CGFloat, y: CGFloat, height: CGFloat, lineWidth:CGFloat, text: String){
-        let rect = CAShapeLayer()
-        rect.strokeColor = UIColor.black.cgColor
-        rect.fillColor = UIColor.clear.cgColor
-        rect.lineWidth = lineWidth
-        rect.path = UIBezierPath(rect:CGRect(x: x, y: y, width: lineWidth, height: height)).cgPath
+        let rectLayer = CAShapeLayer()
+        rectLayer.strokeColor = UIColor.blackColor().cgColor
+        rectLayer.fillColor = UIColor.clear.cgColor
+        rectLayer.lineWidth = lineWidth
+        rectLayer.path = UIBezierPath(rect:CGRect(x: x, y: y, width: lineWidth, height: height)).cgPath
         let textLayer = CATextLayer()
         textLayer.frame = CGRect(x: x - CGFloat(10), y: y - CGFloat(20), width: 50, height: 50)
         textLayer.string = text
         textLayer.fontSize = 15
+        textLayer.foregroundColor = UIColor.blackColor().cgColor
+        self.addSublayer(rectLayer)
         self.addSublayer(textLayer)
-        
-        self.addSublayer(rect)
     }
     
     func drawOval(lineWidth:CGFloat){
@@ -44,13 +44,12 @@ class MyShapeLayer: CALayer {
     
     func drawTrack(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat){
         let rect = CAShapeLayer()
-        rect.strokeColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1.0).cgColor
-        rect.fillColor = UIColor(red: 22/255, green: 25/255, blue: 41/255, alpha: 1.0).cgColor
-        rect.lineWidth = 0.5
+        rect.strokeColor = UIColor.blackColor().cgColor
+        rect.fillColor = UIColor.blueColor().cgColor
+        rect.lineWidth = 1
         rect.cornerRadius = 10
         rect.path = UIBezierPath(rect:CGRect(x: x, y: y, width: width, height: height)).cgPath
         self.addSublayer(rect)
     }
-    
     
 }

@@ -28,6 +28,7 @@
 		18771A5D240FBA97003346EF /* TrackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18771A5B240FBA97003346EF /* TrackViewCell.swift */; };
 		18771A5E240FBA97003346EF /* TrackViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18771A5C240FBA97003346EF /* TrackViewCell.xib */; };
 		18771A60241B4D23003346EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18771A5F241B4D23003346EF /* GoogleService-Info.plist */; };
+		18F5AC7D241E1C9D00D1DE33 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F5AC7C241E1C9D00D1DE33 /* UIColorExtension.swift */; };
 		18FFA74E2403CDB300F13DF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA74D2403CDB300F13DF1 /* AppDelegate.swift */; };
 		18FFA7502403CDB300F13DF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA74F2403CDB300F13DF1 /* SceneDelegate.swift */; };
 		18FFA7522403CDB300F13DF1 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA7512403CDB300F13DF1 /* EditViewController.swift */; };
@@ -81,6 +82,7 @@
 		18771A5B240FBA97003346EF /* TrackViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackViewCell.swift; sourceTree = "<group>"; };
 		18771A5C240FBA97003346EF /* TrackViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackViewCell.xib; sourceTree = "<group>"; };
 		18771A5F241B4D23003346EF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		18F5AC7C241E1C9D00D1DE33 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		18FFA74A2403CDB300F13DF1 /* MotionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FFA74D2403CDB300F13DF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18FFA74F2403CDB300F13DF1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				185826FD241B612D00CF6F8E /* PostListViewController.swift */,
 				185826FF241B622400CF6F8E /* PostCollectionViewCell.swift */,
 				18582701241B888A00CF6F8E /* PostListViewModel.swift */,
+				18F5AC7C241E1C9D00D1DE33 /* UIColorExtension.swift */,
 			);
 			path = MotionApp;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				1856364D240BB60E005E9E5B /* DrawView.swift in Sources */,
 				18582702241B888A00CF6F8E /* PostListViewModel.swift in Sources */,
 				18563659240BDA6E005E9E5B /* MyShapeLayer.swift in Sources */,
+				18F5AC7D241E1C9D00D1DE33 /* UIColorExtension.swift in Sources */,
 				18771A52240E2891003346EF /* EditViewDataSource.swift in Sources */,
 				18771A5D240FBA97003346EF /* TrackViewCell.swift in Sources */,
 				185FD277240B77FD006E8B01 /* Cells.swift in Sources */,

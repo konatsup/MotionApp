@@ -104,19 +104,16 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
         
         testBtnTapped.bind(to: Binder(self) {me, _ in
             print("test")
-            me.initAnimations(animations: me.animations)
+            me.updateAnimations(animations: me.animations)
             me.vcStateRelay.accept("popViewController")
             
         }).disposed(by: disposeBag)
         
-        
     }
     
-    func initAnimations(animations: [AnimationLayer]) {
-        //        print("editVC initAnimatons")
+    func updateAnimations(animations: [AnimationLayer]) {
         self.animations = animations
         self.animationsRelay.accept(animations)
-        print("editVC initAnimatons")
     }
     
     func scrollViewOffsetChanged(offsetX: CGFloat){
