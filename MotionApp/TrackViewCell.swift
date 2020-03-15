@@ -11,6 +11,7 @@ import SnapKit
 
 class TrackViewCell: UITableViewCell, UIScrollViewDelegate {
     var label: UILabel = UILabel()
+//    var uiView
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,14 +28,19 @@ class TrackViewCell: UITableViewCell, UIScrollViewDelegate {
     }
     
     func setCell() {
-        
-        label = UILabel()
-        label.text = "aaaaaa"
-        label.font = label.font.withSize(50)
+//        self.contentView.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: 50)
+//        let uiView = UIView()
+//        label = UILabel()
+        label.text = "0"
+        label.font = label.font.withSize(41.5)
+        label.textAlignment = .center
+        label.textColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1.0)
+//        label.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
         self.contentView.addSubview(label)
         label.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(self.contentView.snp.left)
             //            make.width.equalTo(self.contentView.snp.width)
+            
             make.height.equalTo(self.contentView.snp.height)
             //            make.center.equalTo(self.contentView.snp.center)
         }
