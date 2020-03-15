@@ -33,6 +33,22 @@ class MyShapeLayer: CALayer {
         self.addSublayer(textLayer)
     }
     
+    func drawMainBar(x: CGFloat, y: CGFloat, height: CGFloat, lineWidth:CGFloat){
+        let rectLayer = CAShapeLayer()
+        rectLayer.strokeColor = UIColor.whiteColor().cgColor
+        rectLayer.fillColor = UIColor.blueColor().cgColor
+        rectLayer.lineWidth = 1
+        rectLayer.path = UIBezierPath(rect:CGRect(x: x - lineWidth/2, y: 30, width: lineWidth, height: self.frame.height)).cgPath
+        self.addSublayer(rectLayer)
+//        let ovalShapeLayer = CAShapeLayer()
+//        ovalShapeLayer.strokeColor = UIColor.blue.cgColor
+//        ovalShapeLayer.fillColor = UIColor.clear.cgColor
+//        ovalShapeLayer.lineWidth = lineWidth
+//        ovalShapeLayer.path = UIBezierPath(ovalIn: CGRect(x:0, y:0, width:self.frame.width, height: self.frame.height)).cgPath
+//        self.addSublayer(ovalShapeLayer)
+        
+    }
+    
     func drawOval(lineWidth:CGFloat){
         let ovalShapeLayer = CAShapeLayer()
         ovalShapeLayer.strokeColor = UIColor.blue.cgColor

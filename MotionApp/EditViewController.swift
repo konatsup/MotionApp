@@ -58,6 +58,7 @@ class EditViewController: UIViewController{
     
     
     var drawView: DrawView!
+    var barView: UIView!
     
     var scrollBeginingPoint: CGPoint!
     
@@ -71,6 +72,7 @@ class EditViewController: UIViewController{
     var trackViewCells: [TrackViewCell] = []
     let timeMeterLayer = MyShapeLayer()
     let trackLayer = MyShapeLayer()
+    let barLayer = MyShapeLayer()
     
     let timeMeterHeight: CGFloat = 50
     let buttonHeight = 50
@@ -79,7 +81,9 @@ class EditViewController: UIViewController{
     let sideCellWidth: CGFloat = 50.0
     let divisionWidth: CGFloat = 10
     let trackHeight: CGFloat = 50
+    var trackMarginLeft: CGFloat = 0
     let trackMarginRight: CGFloat = 500
+    let barWidth: CGFloat = 5
     //     trackCount: Int = 20
     
     init(project: Project) {
@@ -100,8 +104,11 @@ class EditViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+         let width = self.view.frame.width
+        let height = self.view.frame.width
         view.backgroundColor = .white
+        
+        trackMarginLeft = view.frame.width / 2 - sideCellWidth
         
         viewModel.timerCountRelay
             .asDriver(onErrorJustReturn: 0)
@@ -173,18 +180,32 @@ class EditViewController: UIViewController{
             make.width.equalTo(self.view.snp.width)
             make.left.equalTo(self.view.snp.left).offset(sideCellWidth)
         }
+
+        barView = UIView()
+        barView.frame = CGRect(x: 0, y: 0, width: barWidth, height: height)
+        self.view.addSubview(barView)
+        barView.snp.makeConstraints { (make) -> Void in
+            make.bottom.equalTo(self.view.snp.bottom)
+            make.height.equalTo(self.view.snp.height).dividedBy(2)
+//            make.width.equalTo(self.view.snp.width)
+//            make.left.equalTo(self.view.snp.left).offset(sideCellWidth)
+        }
         
-        let width = self.view.frame.width
+
         scrollViewMain.layer.addSublayer(trackLayer)
 
-        timeMeterLayer.frame = CGRect(x: 0, y: 0, width: divisionWidth * maxDuration, height: timeMeterHeight)
+        timeMeterLayer.frame = CGRect(x: 0, y: 0, width: divisionWidth * maxDuration + trackMarginLeft, height: timeMeterHeight)
         timeMeterView.layer.addSublayer(timeMeterLayer)
+          
+        
+        barLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        barView.layer.addSublayer(barLayer)
         
         
         for i in 0 ..< Int(self.maxDuration) {
             
             let index = CGFloat(i)
-            let x = index * divisionWidth
+            let x = index * divisionWidth + self.trackMarginLeft
             var y: CGFloat = 0
             var height: CGFloat = 0
             var lineWidth: CGFloat = 1
@@ -206,24 +227,27 @@ class EditViewController: UIViewController{
             
         }
         
+        barLayer.drawMainBar(x: width/2, y: height, height: height, lineWidth: barWidth)
+        
+        
         let floaty = Floaty()
         floaty.fabDelegate = self
         floaty.buttonColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1.0)
         floaty.plusColor = UIColor(red: 22/255, green: 25/255, blue: 41/255, alpha: 1.0)        
         view.addSubview(floaty)
         
-        let button = UIButton()
-        button.backgroundColor = .red
-        button.setTitle("start", for: .normal)
-        view.addSubview(button)
+        let startButton = UIButton()
+        startButton.backgroundColor = .red
+        startButton.setTitle("start", for: .normal)
+        view.addSubview(startButton)
         
-        button.snp.makeConstraints { (make) in
+        startButton.snp.makeConstraints { (make) in
             make.top.equalTo(self.drawView.snp.bottom).offset(-buttonHeight)
             make.left.equalTo(buttonWidth * 2)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(buttonHeight)
         }
-        button.rx.tap
+        startButton.rx.tap
             .bind(to: viewModel.btnTapped)
             .disposed(by: disposeBag)
         //
@@ -297,7 +321,7 @@ class EditViewController: UIViewController{
             print(String(i))
             let animation = self.project.animations[i]
             let index = CGFloat(i)
-            let x: CGFloat = divisionWidth * CGFloat(animation.startTime) * 10
+            let x: CGFloat = divisionWidth * CGFloat(animation.startTime) * 10 + trackMarginLeft
             let y: CGFloat = index * trackHeight
 
             let duration = animation.endTime - animation.startTime
@@ -411,7 +435,7 @@ extension EditViewController: UIScrollViewDelegate {
 extension EditViewController: FloatyDelegate {
     func emptyFloatySelected(_ floaty: Floaty) {
         print("FAB clicked")
-        let animation = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 200, toX: 300, toY: 200)
+        let animation = AnimationLayer(startTime: 2.0, endTime: 3.0, fromX: 0, fromY: 200, toX: 300, toY: 200)
         self.project.animations.append(animation)
         self.viewModel.updateAnimations(animations: self.project.animations)
         

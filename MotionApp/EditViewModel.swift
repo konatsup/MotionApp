@@ -64,7 +64,8 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
         btnTapped.bind(to: Binder(self) {me, _ in
             
             if !me.timer.isValid {
-                me.timer = Timer.scheduledTimer(timeInterval: me.timeInterval, target: me, selector: #selector(me.up), userInfo: nil,  repeats: true)
+                me.timer =
+                Timer.scheduledTimer(timeInterval: me.timeInterval, target: me, selector: #selector(me.up), userInfo: nil,  repeats: true)
             }
         }).disposed(by: disposeBag)
         
