@@ -76,7 +76,7 @@ class EditViewController: UIViewController{
     
     let timeMeterHeight: CGFloat = 50
     let buttonHeight = 50
-    let buttonWidth = 80
+    var buttonWidth: CGFloat = 0
     let maxDuration: CGFloat = 200
     let sideCellWidth: CGFloat = 50.0
     let divisionWidth: CGFloat = 10
@@ -108,6 +108,7 @@ class EditViewController: UIViewController{
         let height = self.view.frame.width
         view.backgroundColor = .white
         
+        buttonWidth = view.frame.width / 5
         trackMarginLeft = view.frame.width / 2 - sideCellWidth
         
         viewModel.timerCountRelay
@@ -328,10 +329,11 @@ class EditViewController: UIViewController{
         
         label = UILabel()
         label.text = ""
+        label.textAlignment = .center
         self.view.addSubview(label)
         
         label.snp.makeConstraints { (make) in
-            make.top.equalTo(200)
+            make.bottom.equalTo(self.drawView.snp.bottom).offset(-buttonHeight)
             make.center.equalTo(self.view.center)
             make.width.equalTo(100)
             make.height.equalTo(20)
