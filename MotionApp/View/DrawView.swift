@@ -107,10 +107,6 @@ final class DrawView: UIView {
                     .addBasicAnimation(keyPath: .positionX, from: CGFloat(animation.fromX), to: CGFloat(animation.toX), duration: duration, timingFunction: .easeOutExpo)
                     .run(type: .sequence)
                 
-//                print("end:\(i): \(drawLayer.position)")s
-                
-//                drawLayer.position = CGPoint(x: animation.toX, y: animation.fromY)
-                
             }
         }
     }

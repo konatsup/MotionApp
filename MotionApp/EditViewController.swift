@@ -262,7 +262,7 @@ class EditViewController: UIViewController{
         startButton.rx.tap
             .bind(to: viewModel.btnTapped)
             .disposed(by: disposeBag)
-        //
+        
         let stopButton = UIButton()
         stopButton.backgroundColor = .orange
         stopButton.setTitle("stop", for: .normal)
@@ -276,6 +276,21 @@ class EditViewController: UIViewController{
         }
         stopButton.rx.tap
             .bind(to: viewModel.stopBtnTapped)
+            .disposed(by: disposeBag)
+        
+        let resetButton = UIButton()
+        resetButton.backgroundColor = .purple
+        resetButton.setTitle("reset", for: .normal)
+        view.addSubview(resetButton)
+        
+        resetButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.drawView.snp.bottom)
+            make.left.equalTo(buttonWidth * 4)
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(buttonHeight)
+        }
+        resetButton.rx.tap
+            .bind(to: viewModel.resetBtnTapped)
             .disposed(by: disposeBag)
         
         

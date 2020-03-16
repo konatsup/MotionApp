@@ -34,6 +34,7 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     //input
     var btnTapped = PublishRelay<Void>()
     var stopBtnTapped = PublishRelay<Void>()
+    var resetBtnTapped = PublishRelay<Void>()
     var uploadBtnTapped = PublishRelay<Void>()
     var testBtnTapped = PublishRelay<Void>()
     
@@ -50,38 +51,27 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     
     var vcStateRelay = PublishRelay<String>()
     var scrollOffsetRelay = PublishRelay<CGFloat>()
-//    var uploadEndRelay = PublishRelay<CGFloat>()
+    //    var uploadEndRelay = PublishRelay<CGFloat>()
     
     init() {
         databaseRef = Database.database().reference()
-        //        databaseRef.observe(.childAdded, with: { snapshot in
-        //            if let obj = snapshot.value as? [String : AnyObject], let name = obj["name"] as? String, let message = obj["message"] {
-        //                //                let currentText = self.textView.text
-        //                //                self.textView.text = (currentText ?? "") + "\n\(name) : \(message)"
-        //            }
-        //        })
         
         btnTapped.bind(to: Binder(self) {me, _ in
             
             if !me.timer.isValid {
                 me.timer =
-                Timer.scheduledTimer(timeInterval: me.timeInterval, target: me, selector: #selector(me.up), userInfo: nil,  repeats: true)
+                    Timer.scheduledTimer(timeInterval: me.timeInterval, target: me, selector: #selector(me.up), userInfo: nil,  repeats: true)
             }
         }).disposed(by: disposeBag)
         
         stopBtnTapped.bind(to: Binder(self) {me, _ in
-            
             if me.timer.isValid {
-                me.timerCount = 0
                 me.timer.invalidate()
             }
-            //            let opacity = 10
-            //            me.e.opacity += 10
-            //
-            //            let position: CGPoint = CGPoint(x: 0, y: 0)
-            //            me.e.position = position
-            
-            //            me.entityRelay.accept(me.e)
+        }).disposed(by: disposeBag)
+        
+        resetBtnTapped.bind(to: Binder(self) {me, _ in
+            me.setTimerCount(timerCount: 0)
         }).disposed(by: disposeBag)
         
         uploadBtnTapped.bind(to: Binder(self) {me, _ in
