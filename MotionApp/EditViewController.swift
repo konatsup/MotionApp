@@ -37,8 +37,8 @@ class EditViewController: UIViewController{
         timeMeterView.showsHorizontalScrollIndicator = false
         timeMeterView.showsVerticalScrollIndicator = false
         timeMeterView.isDirectionalLockEnabled = true
-//        let width = self.view.frame.maxX
-        timeMeterView.contentSize = CGSize(width: CGFloat(self.maxDuration) * self.divisionWidth + self.trackMarginRight, height: self.timeMeterHeight)
+        //        let width = self.view.frame.maxX
+        timeMeterView.contentSize = CGSize(width: CGFloat(self.maxDuration) * self.divisionWidth + self.trackMarginRight + self.trackMarginLeft, height: self.timeMeterHeight)
         
         return timeMeterView
     }()
@@ -51,7 +51,7 @@ class EditViewController: UIViewController{
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isDirectionalLockEnabled = true
         let width = self.view.frame.maxX
-        scrollView.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth + self.trackMarginRight, height: CGFloat(self.project.animations.count + 1) * self.trackHeight)
+        scrollView.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth + self.trackMarginRight + self.trackMarginLeft, height: CGFloat(self.project.animations.count + 1) * self.trackHeight)
         
         return scrollView
     }()
@@ -77,12 +77,12 @@ class EditViewController: UIViewController{
     let timeMeterHeight: CGFloat = 50
     let buttonHeight = 50
     let buttonWidth = 80
-    let maxDuration: CGFloat = 100
+    let maxDuration: CGFloat = 200
     let sideCellWidth: CGFloat = 50.0
     let divisionWidth: CGFloat = 10
     let trackHeight: CGFloat = 50
     var trackMarginLeft: CGFloat = 0
-    let trackMarginRight: CGFloat = 500
+    let trackMarginRight: CGFloat = 50
     let barWidth: CGFloat = 5
     //     trackCount: Int = 20
     
@@ -93,8 +93,8 @@ class EditViewController: UIViewController{
     
     required init?(coder aDecoder: NSCoder) {
         var animations: [AnimationLayer] = []
-        let animation1 = AnimationLayer(startTime: 1.0, endTime: 2.0, fromX: 0, fromY: 100, toX: 300, toY: 200)
-        let animation2 = AnimationLayer(startTime: 3.0, endTime: 5.0, fromX: 0, fromY: 200, toX: 300, toY: 200)
+        let animation1 = AnimationLayer(startTime: 1.0, endTime: 1.5, fromX: 0, fromY: 100, toX: 300, toY: 200)
+        let animation2 = AnimationLayer(startTime: 3.0, endTime: 4.0, fromX: 200, fromY: 200, toX: 20, toY: 100)
         animations.append(animation1)
         animations.append(animation2)
         let p = Project(animations: animations)
@@ -104,7 +104,7 @@ class EditViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         let width = self.view.frame.width
+        let width = self.view.frame.width
         let height = self.view.frame.width
         view.backgroundColor = .white
         
@@ -114,8 +114,11 @@ class EditViewController: UIViewController{
             .asDriver(onErrorJustReturn: 0)
             .drive(Binder(self) {me, timerCount in
                 
-                me.label.text = "\(timerCount)"
+                //                me.label.text = "\(timerCount)"
                 me.drawView.update(timerCount)
+                let currentPosition = CGFloat(timerCount * 10) * self.divisionWidth
+                me.timeMeterView.contentOffset.x = currentPosition
+                
             })
             .disposed(by: disposeBag)
         
@@ -126,7 +129,7 @@ class EditViewController: UIViewController{
                 me.drawView.updateAnimations(animations: animations)
                 
                 me.tableView.reloadData()
-                me.scrollViewMain.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth, height: CGFloat(self.project.animations.count + 1) * self.trackHeight)
+                me.scrollViewMain.contentSize = CGSize(width:CGFloat(self.maxDuration) * self.divisionWidth + self.trackMarginRight + self.trackMarginLeft, height: CGFloat(self.project.animations.count + 1) * self.trackHeight)
             })
             .disposed(by: disposeBag)
         
@@ -134,19 +137,40 @@ class EditViewController: UIViewController{
             .asDriver(onErrorJustReturn: "")
             .drive(Binder(self) {me, state in
                 print(state)
-                self.dismiss(animated: true, completion: nil)
+                
+                
+                switch state {
+                case "popViewController":
+                    me.dismiss(animated: true, completion: nil)
+                case "uploadEnd":
+                    let alert = UIAlertController(title: "投稿が完了しました", message: nil, preferredStyle: .alert)
+                    let yesAction : UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default){
+                        action in
+                        
+//                        let ChatController = chatController()
+//                        self.present(UINavigationController(rootViewController: ChatController),animated: true , completion: nil)
+                        me.dismiss(animated: true, completion: nil)
+                        print("adafdasfs")
+                    }
+                    alert.addAction(yesAction)
+                    me.present(alert, animated: true, completion: nil)
+                
+                default:
+                    print("default")
+                }
+                
             })
             .disposed(by: disposeBag)
         
-//        viewModel.scrollOffsetRelay
-//            .asDriver(onErrorJustReturn: 0.0)
-//            .drive(Binder(self) {me, offsetX in
-//                for cell in me.trackViewCells {
-//                    //                    cell.scrollView.contentOffset.x = offsetX
-//                    //                    cell.setScrollOffset(offsetX: offsetX)
-//                }
-//            })
-//            .disposed(by: disposeBag)
+        //        viewModel.scrollOffsetRelay
+        //            .asDriver(onErrorJustReturn: 0.0)
+        //            .drive(Binder(self) {me, offsetX in
+        //                for cell in me.trackViewCells {
+        //                    //                    cell.scrollView.contentOffset.x = offsetX
+        //                    //                    cell.setScrollOffset(offsetX: offsetX)
+        //                }
+        //            })
+        //            .disposed(by: disposeBag)
         
         drawView = DrawView()
         self.view.addSubview(drawView)
@@ -180,23 +204,21 @@ class EditViewController: UIViewController{
             make.width.equalTo(self.view.snp.width)
             make.left.equalTo(self.view.snp.left).offset(sideCellWidth)
         }
-
+        
         barView = UIView()
         barView.frame = CGRect(x: 0, y: 0, width: barWidth, height: height)
         self.view.addSubview(barView)
         barView.snp.makeConstraints { (make) -> Void in
             make.bottom.equalTo(self.view.snp.bottom)
             make.height.equalTo(self.view.snp.height).dividedBy(2)
-//            make.width.equalTo(self.view.snp.width)
-//            make.left.equalTo(self.view.snp.left).offset(sideCellWidth)
         }
         
-
+        
         scrollViewMain.layer.addSublayer(trackLayer)
-
+        
         timeMeterLayer.frame = CGRect(x: 0, y: 0, width: divisionWidth * maxDuration + trackMarginLeft, height: timeMeterHeight)
         timeMeterView.layer.addSublayer(timeMeterLayer)
-          
+        
         
         barLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
         barView.layer.addSublayer(barLayer)
@@ -300,7 +322,7 @@ class EditViewController: UIViewController{
             .disposed(by: disposeBag)
         
         label = UILabel()
-        label.text = "テキスト"
+        label.text = ""
         self.view.addSubview(label)
         
         label.snp.makeConstraints { (make) in
@@ -313,7 +335,7 @@ class EditViewController: UIViewController{
         let animations = self.project.animations
         viewModel.updateAnimations(animations: animations)
         
-//        rend
+        //        rend
     }
     
     func renderTrack(){
@@ -323,7 +345,7 @@ class EditViewController: UIViewController{
             let index = CGFloat(i)
             let x: CGFloat = divisionWidth * CGFloat(animation.startTime) * 10 + trackMarginLeft
             let y: CGFloat = index * trackHeight
-
+            
             let duration = animation.endTime - animation.startTime
             let width: CGFloat = divisionWidth * CGFloat(duration) * 10
             let height: CGFloat = trackHeight
@@ -374,26 +396,26 @@ extension EditViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-//        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//            scrollBeginingPoint = scrollView.contentOffset;
-//        }
-//
-//        func scrollViewDidScroll(scrollView: UIScrollView) {
-//            let currentPoint = scrollView.contentOffset
-//            print(currentPoint)
-//            if scrollBeginingPoint.y != currentPoint.y {
-//                self.scrollView.contentOffset.y = currentPoint.y
-//            }
-//        }
-//
-//
-//        func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-//
-//            if indexPath.row == 3 {
-//                return nil
-//            }
-//            return indexPath
-//        }
+    //        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    //            scrollBeginingPoint = scrollView.contentOffset;
+    //        }
+    //
+    //        func scrollViewDidScroll(scrollView: UIScrollView) {
+    //            let currentPoint = scrollView.contentOffset
+    //            print(currentPoint)
+    //            if scrollBeginingPoint.y != currentPoint.y {
+    //                self.scrollView.contentOffset.y = currentPoint.y
+    //            }
+    //        }
+    //
+    //
+    //        func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    //
+    //            if indexPath.row == 3 {
+    //                return nil
+    //            }
+    //            return indexPath
+    //        }
 }
 
 
@@ -417,15 +439,15 @@ extension EditViewController: UIScrollViewDelegate {
         let currentPoint = scrollView.contentOffset
         
         if scrollView == timeMeterView {
-            if scrollBeginingPoint.x != currentPoint.x {
-                self.scrollViewMain.contentOffset.x = currentPoint.x
-            }
+            //            if scrollBeginingPoint.x != currentPoint.x {
+            self.scrollViewMain.contentOffset.x = currentPoint.x
+            //            }
         } else if scrollView == scrollViewMain {
-            if scrollBeginingPoint.y != currentPoint.y {
-                self.tableView.contentOffset.y = currentPoint.y
-            } else if scrollBeginingPoint.x != currentPoint.x {
-                self.timeMeterView.contentOffset.x = currentPoint.x
-            }
+            //            if scrollBeginingPoint.y != currentPoint.y {
+            self.tableView.contentOffset.y = currentPoint.y
+            //            } else if scrollBeginingPoint.x != currentPoint.x {
+            self.timeMeterView.contentOffset.x = currentPoint.x
+            //            }
         }
         
     }
@@ -439,8 +461,8 @@ extension EditViewController: FloatyDelegate {
         self.project.animations.append(animation)
         self.viewModel.updateAnimations(animations: self.project.animations)
         
-//        let alert = UIAlertController(title: "FABが押されました", message: nil, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        present(alert, animated: true, completion: nil)
+        //        let alert = UIAlertController(title: "FABが押されました", message: nil, preferredStyle: .alert)
+        //        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        //        present(alert, animated: true, completion: nil)
     }
 }

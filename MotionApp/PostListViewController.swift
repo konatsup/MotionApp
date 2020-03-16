@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Floaty
 
 let screenSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
 
@@ -42,7 +43,10 @@ final class PostListViewController: UIViewController {
         viewModel.timerCountRelay
             .asDriver(onErrorJustReturn: 0)
             .drive(Binder(self) {me, timerCount in
-                me.cells.forEach{ $0.drawView.update(timerCount) }
+                me.cells.forEach{
+                    $0.drawView.update(timerCount)
+                    
+                }
             })
             .disposed(by: disposeBag)
         
@@ -86,6 +90,12 @@ final class PostListViewController: UIViewController {
         collectionView.delegate = self
         
         view.addSubview(collectionView)
+        
+        let floaty = Floaty()
+        floaty.fabDelegate = self
+        floaty.buttonColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1.0)
+        floaty.plusColor = UIColor(red: 22/255, green: 25/255, blue: 41/255, alpha: 1.0)
+        view.addSubview(floaty)
     }
     override func viewDidAppear(_ animated: Bool) {
         print("Did")
@@ -100,6 +110,19 @@ final class PostListViewController: UIViewController {
     fileprivate func moveNextVC(indexPath: IndexPath) {
         
         let nextVC = EditViewController(project: projects[indexPath.item])
+        nextVC.modalPresentationStyle = .fullScreen
+        present(nextVC, animated: true, completion: nil)
+    }
+    
+    fileprivate func moveNewNextVC() {
+        var animations: [AnimationLayer] = []
+        let animation1 = AnimationLayer(startTime: 1.0, endTime: 1.5, fromX: 0, fromY: 100, toX: 300, toY: 200)
+        let animation2 = AnimationLayer(startTime: 3.0, endTime: 4.0, fromX: 200, fromY: 200, toX: 20, toY: 100)
+        animations.append(animation1)
+        animations.append(animation2)
+        let p = Project(animations: animations)
+        
+        let nextVC = EditViewController(project: p)
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true, completion: nil)
     }
@@ -135,5 +158,21 @@ extension PostListViewController: UICollectionViewDelegateFlowLayout {
         
         //ここでは画面の横サイズの半分の大きさのcellサイズを指定
         return CGSize(width: screenSize.width / 2.0, height: screenSize.width / 2.0)
+    }
+}
+
+
+
+extension PostListViewController: FloatyDelegate {
+    func emptyFloatySelected(_ floaty: Floaty) {
+        print("FAB clicked")
+        moveNewNextVC()
+//        let animation = AnimationLayer(startTime: 2.0, endTime: 3.0, fromX: 0, fromY: 200, toX: 300, toY: 200)
+//        self.project.animations.append(animation)
+//        self.viewModel.updateAnimations(animations: self.project.animations)
+        
+//        let alert = UIAlertController(title: "FABが押されました", message: nil, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//        present(alert, animated: true, completion: nil)
     }
 }

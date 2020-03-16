@@ -49,8 +49,8 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     var animations: [AnimationLayer] = []
     
     var vcStateRelay = PublishRelay<String>()
-    
     var scrollOffsetRelay = PublishRelay<CGFloat>()
+//    var uploadEndRelay = PublishRelay<CGFloat>()
     
     init() {
         databaseRef = Database.database().reference()
@@ -100,6 +100,8 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
             }
             let projectData = ["animations" : animationDictionaries]
             self.databaseRef.child("projects") .childByAutoId().setValue(projectData)
+            
+            me.vcStateRelay.accept("uploadEnd")
             
         }).disposed(by: disposeBag)
         

@@ -51,9 +51,9 @@ class MyShapeLayer: CALayer {
     
     func drawOval(lineWidth:CGFloat){
         let ovalShapeLayer = CAShapeLayer()
-        ovalShapeLayer.strokeColor = UIColor.blue.cgColor
-        ovalShapeLayer.fillColor = UIColor.clear.cgColor
-        ovalShapeLayer.lineWidth = lineWidth
+//        ovalShapeLayer.strokeColor = UIColor.blueColor().cgColor
+        ovalShapeLayer.fillColor = UIColor.blueColor().cgColor
+//        ovalShapeLayer.lineWidth = lineWidth
         ovalShapeLayer.path = UIBezierPath(ovalIn: CGRect(x:0, y:0, width:self.frame.width, height: self.frame.height)).cgPath
         self.addSublayer(ovalShapeLayer)
     }

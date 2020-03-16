@@ -65,6 +65,12 @@ final class DrawView: UIView {
     
     func updateAnimations(animations: [AnimationLayer]){
         self.animations = animations
+        
+        layer.sublayers = layer.sublayers?.filter { theLayer in
+            !theLayer.isKind(of: MyShapeLayer.classForCoder())
+        }
+        drawLayers.removeAll()
+        
         for animation in animations {
             addRectLayer(p: CGPoint(x: animation.fromX, y: animation.fromY) )
         }
@@ -128,6 +134,7 @@ final class DrawView: UIView {
         let x = currentPoint.x - 40
         let y = currentPoint.y - 40
         drawLayer.frame = CGRect(x: x, y: y, width:80, height:80)
+        //        drawLayer.
         drawLayer.drawOval(lineWidth:1)
         drawLayers.append(drawLayer)
         layer.addSublayer(drawLayer)
