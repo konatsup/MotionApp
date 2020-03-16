@@ -104,6 +104,11 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
         
     }
     
+    func addAnimation(animation: AnimationLayer) {
+        self.animations.append(animation)
+        self.animationsRelay.accept(animations)
+    }
+    
     func updateAnimations(animations: [AnimationLayer]) {
         self.animations = animations
         self.animationsRelay.accept(animations)

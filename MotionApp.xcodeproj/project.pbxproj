@@ -35,6 +35,8 @@
 		18F5AC85241F2A4700D1DE33 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F5AC84241F2A4700D1DE33 /* pause.png */; };
 		18F5AC87241F2AB200D1DE33 /* rewind.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F5AC86241F2AB200D1DE33 /* rewind.png */; };
 		18F5AC89241F2D4C00D1DE33 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F5AC88241F2D4C00D1DE33 /* close.png */; };
+		18F5AC8B241F342100D1DE33 /* BottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F5AC8A241F342100D1DE33 /* BottomView.swift */; };
+		18F5AC8D241F342F00D1DE33 /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F5AC8C241F342F00D1DE33 /* BottomView.xib */; };
 		18FFA74E2403CDB300F13DF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA74D2403CDB300F13DF1 /* AppDelegate.swift */; };
 		18FFA7502403CDB300F13DF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA74F2403CDB300F13DF1 /* SceneDelegate.swift */; };
 		18FFA7522403CDB300F13DF1 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FFA7512403CDB300F13DF1 /* EditViewController.swift */; };
@@ -95,6 +97,8 @@
 		18F5AC84241F2A4700D1DE33 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		18F5AC86241F2AB200D1DE33 /* rewind.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rewind.png; sourceTree = "<group>"; };
 		18F5AC88241F2D4C00D1DE33 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		18F5AC8A241F342100D1DE33 /* BottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomView.swift; sourceTree = "<group>"; };
+		18F5AC8C241F342F00D1DE33 /* BottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
 		18FFA74A2403CDB300F13DF1 /* MotionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FFA74D2403CDB300F13DF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18FFA74F2403CDB300F13DF1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -215,6 +219,8 @@
 				185826FF241B622400CF6F8E /* PostCollectionViewCell.swift */,
 				18582701241B888A00CF6F8E /* PostListViewModel.swift */,
 				18F5AC7C241E1C9D00D1DE33 /* UIColorExtension.swift */,
+				18F5AC8A241F342100D1DE33 /* BottomView.swift */,
+				18F5AC8C241F342F00D1DE33 /* BottomView.xib */,
 			);
 			path = MotionApp;
 			sourceTree = "<group>";
@@ -384,6 +390,7 @@
 				1856365B240BDDA4005E9E5B /* DrawView.xib in Resources */,
 				18FFA7552403CDB300F13DF1 /* Main.storyboard in Resources */,
 				18F5AC89241F2D4C00D1DE33 /* close.png in Resources */,
+				18F5AC8D241F342F00D1DE33 /* BottomView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,6 +537,7 @@
 				183F4FF8240CE49300F2A6A1 /* BaseView.swift in Sources */,
 				18FFA7502403CDB300F13DF1 /* SceneDelegate.swift in Sources */,
 				1856365D240C0153005E9E5B /* EditViewModel.swift in Sources */,
+				18F5AC8B241F342100D1DE33 /* BottomView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

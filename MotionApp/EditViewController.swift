@@ -58,6 +58,7 @@ class EditViewController: UIViewController{
     
     var drawView: DrawView!
     var barView: UIView!
+    var bottomView: BottomView!
     
     var scrollBeginingPoint: CGPoint!
     var currentTimePosition: CGFloat = 0.0
@@ -126,6 +127,8 @@ class EditViewController: UIViewController{
         viewModel.animationsRelay
             .asDriver(onErrorJustReturn: [])
             .drive(Binder(self) {me, animations in
+                me.bottomView.isHidden = true
+                me.project.animations = animations
                 me.self.renderTrack()
                 me.drawView.updateAnimations(animations: animations)
                 
@@ -248,6 +251,20 @@ class EditViewController: UIViewController{
         floaty.buttonColor = UIColor.whiteColor()
         floaty.plusColor = UIColor.blackColor()
         view.addSubview(floaty)
+        
+        bottomView = BottomView()
+        bottomView.make(viewModel: self.viewModel)
+        bottomView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        bottomView.backgroundColor = .whiteColor()
+        bottomView.isHidden = true
+        self.view.addSubview(bottomView)
+        bottomView.snp.makeConstraints { (make) -> Void in
+            make.bottom.equalTo(self.view.snp.bottom)
+            make.height.equalTo(self.view.snp.height).dividedBy(2)
+            make.width.equalTo(self.view.snp.width)
+        }
+        
+//        let text
         
         let startButton = UIButton()
         startButton.setImage(UIImage(named: "play.png"), for: .normal)
@@ -434,9 +451,17 @@ extension EditViewController: UIScrollViewDelegate {
 
 extension EditViewController: FloatyDelegate {
     func emptyFloatySelected(_ floaty: Floaty) {
-        let animation = AnimationLayer(startTime: 2.0, endTime: 3.0, fromX: 0, fromY: 200, toX: 300, toY: 200)
-        self.project.animations.append(animation)
-        self.viewModel.updateAnimations(animations: self.project.animations)
+        self.bottomView.isHidden = false
+//        UIView.animate(withDuration: 2,
+//            animations: {
+//                self.bottomView.frame
+//            })
+        
+
+//        let animation = AnimationLayer(startTime: 2.0, endTime: 3.0, fromX: 0, fromY: 200, toX: 300, toY: 200)
+//
+//        self.project.animations.append(animation)
+//        self.viewModel.updateAnimations(animations: self.project.animations)
         
         //        let alert = UIAlertController(title: "FABが押されました", message: nil, preferredStyle: .alert)
         //        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
