@@ -250,8 +250,7 @@ class EditViewController: UIViewController{
         view.addSubview(floaty)
         
         let startButton = UIButton()
-        startButton.backgroundColor = .red
-        startButton.setTitle("start", for: .normal)
+        startButton.setImage(UIImage(named: "play.png"), for: .normal)
         view.addSubview(startButton)
         
         startButton.snp.makeConstraints { (make) in
@@ -265,8 +264,7 @@ class EditViewController: UIViewController{
             .disposed(by: disposeBag)
         
         let stopButton = UIButton()
-        stopButton.backgroundColor = .orange
-        stopButton.setTitle("stop", for: .normal)
+        stopButton.setImage(UIImage(named: "stop.png"), for: .normal)
         view.addSubview(stopButton)
         
         stopButton.snp.makeConstraints { (make) in
@@ -280,13 +278,12 @@ class EditViewController: UIViewController{
             .disposed(by: disposeBag)
         
         let resetButton = UIButton()
-        resetButton.backgroundColor = .purple
-        resetButton.setTitle("reset", for: .normal)
+        resetButton.setImage(UIImage(named: "rewind.png"), for: .normal)
         view.addSubview(resetButton)
         
         resetButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.drawView.snp.bottom)
-            make.left.equalTo(buttonWidth * 4)
+            make.left.equalTo(buttonWidth * 1)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(buttonHeight)
         }
@@ -296,13 +293,12 @@ class EditViewController: UIViewController{
         
         
         let uploadButton = UIButton()
-        uploadButton.backgroundColor = .green
-        uploadButton.setTitle("upload", for: .normal)
+        uploadButton.setImage(UIImage(named: "upload.png"), for: .normal)
         view.addSubview(uploadButton)
         
         uploadButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.drawView.snp.bottom)
-            make.left.equalTo(buttonWidth * 0)
+            make.left.equalTo(buttonWidth * 4)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(buttonHeight)
         }
@@ -312,13 +308,12 @@ class EditViewController: UIViewController{
             .disposed(by: disposeBag)
         
         let testButton = UIButton()
-        testButton.backgroundColor = .blue
-        testButton.setTitle("close", for: .normal)
+        testButton.setImage(UIImage(named: "close.png"), for: .normal)
         view.addSubview(testButton)
         
         testButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.drawView.snp.bottom)
-            make.left.equalTo(buttonWidth * 1)
+            make.left.equalTo(buttonWidth * 0)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(buttonHeight)
         }
