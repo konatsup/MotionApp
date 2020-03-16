@@ -43,7 +43,7 @@ final class PostListViewModel {
     var projectsRelay = PublishRelay<[Project]>()
     var projects: [Project] = []
     
-    let maxRepeatTime = 5.0
+    let maxRepeatTime = 5.5
     
     init() {
         databaseRef = Database.database().reference()

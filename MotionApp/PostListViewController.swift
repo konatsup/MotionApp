@@ -64,6 +64,7 @@ final class PostListViewController: UIViewController {
             .asDriver(onErrorJustReturn: [])
             .drive(Binder(self) {me, projects in
                 print("update animations")
+                print("projects toX:  \(projects[0].animations[0].toX)")
                 me.projects = projects
                 me.collectionView.reloadData()
                 
@@ -93,8 +94,8 @@ final class PostListViewController: UIViewController {
         
         let floaty = Floaty()
         floaty.fabDelegate = self
-        floaty.buttonColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1.0)
-        floaty.plusColor = UIColor(red: 22/255, green: 25/255, blue: 41/255, alpha: 1.0)
+        floaty.buttonColor = UIColor.whiteColor()
+        floaty.plusColor = UIColor.blackColor()
         view.addSubview(floaty)
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -109,6 +110,7 @@ final class PostListViewController: UIViewController {
     
     fileprivate func moveNextVC(indexPath: IndexPath) {
         
+        print("move toX:  \(projects[indexPath.item].animations[0].toX)")
         let nextVC = EditViewController(project: projects[indexPath.item])
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true, completion: nil)

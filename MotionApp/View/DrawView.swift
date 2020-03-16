@@ -81,11 +81,8 @@ final class DrawView: UIView {
         
         var ans: [AnimationLayer] = []
         animations.forEach { animation in
-            animation.fromX /= 2
-            animation.fromY /= 2
-            animation.toX /= 2
-            animation.toY /= 2
-            ans.append(animation)
+            let a = AnimationLayer(startTime: animation.startTime, endTime: animation.endTime, fromX: animation.fromX/2, fromY: animation.fromY/2, toX: animation.toX/2, toY: animation.toY/2)
+            ans.append(a)
         }
         
         self.animations = ans
