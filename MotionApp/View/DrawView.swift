@@ -77,6 +77,30 @@ final class DrawView: UIView {
         
     }
     
+    func updateHalfAnimations(animations: [AnimationLayer]){
+        
+        var ans: [AnimationLayer] = []
+        animations.forEach { animation in
+            animation.fromX /= 2
+            animation.fromY /= 2
+            animation.toX /= 2
+            animation.toY /= 2
+            ans.append(animation)
+        }
+        
+        self.animations = ans
+        
+        layer.sublayers = layer.sublayers?.filter { theLayer in
+            !theLayer.isKind(of: MyShapeLayer.classForCoder())
+        }
+        drawLayers.removeAll()
+        
+        for animation in animations {
+            addRectHalfLayer(p: CGPoint(x: animation.fromX, y: animation.fromY) )
+        }
+        
+    }
+    
 //    func onUpdatedCurrentPostition(currentPosition: CGPoint) {
 //        for i in 0..<animations.count {
 //            let animation = animations[i]
@@ -155,4 +179,15 @@ final class DrawView: UIView {
         drawLayers.append(drawLayer)
         layer.addSublayer(drawLayer)
     }
+    
+    private func addRectHalfLayer(p currentPoint: CGPoint) {
+           let drawLayer = MyShapeLayer()
+           let x = currentPoint.x - 40
+           let y = currentPoint.y - 40
+           drawLayer.frame = CGRect(x: x, y: y, width:40, height:40)
+           //        drawLayer.
+           drawLayer.drawOval(lineWidth:1)
+           drawLayers.append(drawLayer)
+           layer.addSublayer(drawLayer)
+       }
 }

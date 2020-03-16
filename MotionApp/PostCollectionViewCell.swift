@@ -29,7 +29,7 @@ class PostCollectionViewCell: UICollectionViewCell {
     }
     
     func setAnimations(animations: [AnimationLayer]){
-        drawView.updateAnimations(animations: animations)
+        drawView.updateHalfAnimations(animations: animations)
     }
     
 //    func setupContents(textName: String) {
