@@ -91,24 +91,32 @@ final class DrawView: UIView {
             let animation = animations[i]
             let drawLayer = drawLayers[i]
             
-//            if timerCount < animation.startTime {
-//                drawLayer.position = CGPoint(x: animation.fromX, y: animation.fromY)
-//            }
+//            print("timerCount: \(timerCount)")
+            
+            if timerCount < animation.startTime {
+                drawLayer.position = CGPoint(x: animation.fromX, y: animation.fromY)
+                drawLayer.sica.cancel()
+            }
             
             if timerCount < animation.startTime + 0.01 && timerCount > animation.startTime - 0.01  {
                 let duration: Double = animation.endTime - animation.startTime
                 
-                print("duration: \(duration)")
+//                print("duration: \(duration)")
+//                print("start:\(i): \(drawLayer.position)")
                 drawLayer.sica
                     .addBasicAnimation(keyPath: .positionX, from: CGFloat(animation.fromX), to: CGFloat(animation.toX), duration: duration, timingFunction: .easeOutExpo)
                     .run(type: .sequence)
+                
+//                print("end:\(i): \(drawLayer.position)")s
+                
+//                drawLayer.position = CGPoint(x: animation.toX, y: animation.fromY)
                 
             }
         }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let currentPoint = touches.first!.location(in: self)
+//        let currentPoint = touches.first!.location(in: self)
         //        print( currentPoint)
         
         //        addRectLayer(p: currentPoint)
@@ -126,8 +134,8 @@ final class DrawView: UIView {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let currentPoint = touches.first!.location(in: self)
-        addRectLayer(p: currentPoint)
+//        let currentPoint = touches.first!.location(in: self)
+//        addRectLayer(p: currentPoint)
         //        path.addLine(to: currentPoint)
         //        drawLayer.path = path.cgPath
     }
