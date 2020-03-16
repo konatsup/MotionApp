@@ -119,8 +119,9 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
         self.animationsRelay.accept(animations)
     }
     
-    func scrollViewOffsetChanged(offsetX: CGFloat){
-        self.scrollOffsetRelay.accept(offsetX)
+    func setTimerCount(timerCount: Double){
+        self.timerCount = timerCount
+        self.timerCountRelay.accept(timerCount)
     }
     
     @objc func up() {

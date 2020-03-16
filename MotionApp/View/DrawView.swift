@@ -77,6 +77,14 @@ final class DrawView: UIView {
         
     }
     
+//    func onUpdatedCurrentPostition(currentPosition: CGPoint) {
+//        for i in 0..<animations.count {
+//            let animation = animations[i]
+//            let drawLayer = drawLayers[i]
+//            drawLayer.position = CGPoint(x: animation.fromX, y: animation.fromY)
+//        }
+//    }
+    
     func update(_ timerCount: Double){
         
         for i in 0..<animations.count {

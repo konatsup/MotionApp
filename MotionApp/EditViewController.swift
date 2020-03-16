@@ -13,7 +13,6 @@ import SnapKit
 import Floaty
 
 class EditViewController: UIViewController{
-    private lazy var dataSource = EditViewDataSource()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: self.view.bounds, style: .plain)
@@ -61,6 +60,7 @@ class EditViewController: UIViewController{
     var barView: UIView!
     
     var scrollBeginingPoint: CGPoint!
+    var currentTimePosition: CGFloat = 0.0
     
     private let disposeBag = DisposeBag()
     lazy var label = UILabel()
@@ -80,10 +80,12 @@ class EditViewController: UIViewController{
     let maxDuration: CGFloat = 200
     let sideCellWidth: CGFloat = 50.0
     let divisionWidth: CGFloat = 10
+    let divisionNumPerSec: CGFloat = 10
     let trackHeight: CGFloat = 50
     var trackMarginLeft: CGFloat = 0
     let trackMarginRight: CGFloat = 50
     let barWidth: CGFloat = 5
+
     //     trackCount: Int = 20
     
     init(project: Project) {
@@ -114,9 +116,9 @@ class EditViewController: UIViewController{
             .asDriver(onErrorJustReturn: 0)
             .drive(Binder(self) {me, timerCount in
                 
-                //                me.label.text = "\(timerCount)"
+                me.label.text = "\(timerCount)"
                 me.drawView.update(timerCount)
-                let currentPosition = CGFloat(timerCount * 10) * self.divisionWidth
+                let currentPosition = CGFloat(timerCount) * self.divisionWidth * self.divisionNumPerSec
                 me.timeMeterView.contentOffset.x = currentPosition
                 
             })
@@ -147,30 +149,20 @@ class EditViewController: UIViewController{
                     let yesAction : UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default){
                         action in
                         
-//                        let ChatController = chatController()
-//                        self.present(UINavigationController(rootViewController: ChatController),animated: true , completion: nil)
+                        //                        let ChatController = chatController()
+                        //                        self.present(UINavigationController(rootViewController: ChatController),animated: true , completion: nil)
                         me.dismiss(animated: true, completion: nil)
                         print("adafdasfs")
                     }
                     alert.addAction(yesAction)
                     me.present(alert, animated: true, completion: nil)
-                
+                    
                 default:
                     print("default")
                 }
                 
             })
             .disposed(by: disposeBag)
-        
-        //        viewModel.scrollOffsetRelay
-        //            .asDriver(onErrorJustReturn: 0.0)
-        //            .drive(Binder(self) {me, offsetX in
-        //                for cell in me.trackViewCells {
-        //                    //                    cell.scrollView.contentOffset.x = offsetX
-        //                    //                    cell.setScrollOffset(offsetX: offsetX)
-        //                }
-        //            })
-        //            .disposed(by: disposeBag)
         
         drawView = DrawView()
         self.view.addSubview(drawView)
@@ -232,12 +224,12 @@ class EditViewController: UIViewController{
             var height: CGFloat = 0
             var lineWidth: CGFloat = 1
             var text: String = ""
-            switch (index.truncatingRemainder(dividingBy: 10)) {
+            switch (index.truncatingRemainder(dividingBy: divisionNumPerSec)) {
             case 0:
                 y = 20
                 lineWidth = 2
-                text = NSString(format: "%.1f", (index / 10.0) ) as String
-            case 5:
+                text = NSString(format: "%.1f", (index / divisionNumPerSec) ) as String
+            case 5*(divisionNumPerSec/10):
                 y = 25
                 lineWidth = 1.5
             default:
@@ -254,8 +246,8 @@ class EditViewController: UIViewController{
         
         let floaty = Floaty()
         floaty.fabDelegate = self
-        floaty.buttonColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1.0)
-        floaty.plusColor = UIColor(red: 22/255, green: 25/255, blue: 41/255, alpha: 1.0)        
+        floaty.buttonColor = UIColor.whiteColor()
+        floaty.plusColor = UIColor.blackColor()
         view.addSubview(floaty)
         
         let startButton = UIButton()
@@ -343,11 +335,11 @@ class EditViewController: UIViewController{
             print(String(i))
             let animation = self.project.animations[i]
             let index = CGFloat(i)
-            let x: CGFloat = divisionWidth * CGFloat(animation.startTime) * 10 + trackMarginLeft
+            let x: CGFloat = divisionWidth * CGFloat(animation.startTime) * divisionNumPerSec + trackMarginLeft
             let y: CGFloat = index * trackHeight
             
             let duration = animation.endTime - animation.startTime
-            let width: CGFloat = divisionWidth * CGFloat(duration) * 10
+            let width: CGFloat = divisionWidth * CGFloat(duration) * divisionNumPerSec
             let height: CGFloat = trackHeight
             trackLayer.drawTrack(x: x, y: y, width: width, height: height)
         }
@@ -396,26 +388,6 @@ extension EditViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    //        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    //            scrollBeginingPoint = scrollView.contentOffset;
-    //        }
-    //
-    //        func scrollViewDidScroll(scrollView: UIScrollView) {
-    //            let currentPoint = scrollView.contentOffset
-    //            print(currentPoint)
-    //            if scrollBeginingPoint.y != currentPoint.y {
-    //                self.scrollView.contentOffset.y = currentPoint.y
-    //            }
-    //        }
-    //
-    //
-    //        func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-    //
-    //            if indexPath.row == 3 {
-    //                return nil
-    //            }
-    //            return indexPath
-    //        }
 }
 
 
@@ -425,29 +397,27 @@ extension EditViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        //        guard scrollView == self.scrollView else { return }
         print("didEndDecelerating")
     }
-    //
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        scrollBeginingPoint = scrollView.contentOffset
+        //        scrollBeginingPoint = scrollView.contentOffset
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("scrollViewDidScroll")
-        //        print(scrollView.contentOffset)
+        //        print("scrollViewDidScroll")
         let currentPoint = scrollView.contentOffset
         
         if scrollView == timeMeterView {
-            //            if scrollBeginingPoint.x != currentPoint.x {
             self.scrollViewMain.contentOffset.x = currentPoint.x
-            //            }
+            let timerCount: Double = Double(currentPoint.x / (self.divisionWidth * divisionNumPerSec))
+//            print(timerCount)
+//            if timerCount < 0.0 {
+//                timerCount = 0.0
+//            }
+            viewModel.setTimerCount(timerCount: timerCount)
         } else if scrollView == scrollViewMain {
-            //            if scrollBeginingPoint.y != currentPoint.y {
             self.tableView.contentOffset.y = currentPoint.y
-            //            } else if scrollBeginingPoint.x != currentPoint.x {
             self.timeMeterView.contentOffset.x = currentPoint.x
-            //            }
         }
         
     }
@@ -456,7 +426,6 @@ extension EditViewController: UIScrollViewDelegate {
 
 extension EditViewController: FloatyDelegate {
     func emptyFloatySelected(_ floaty: Floaty) {
-        print("FAB clicked")
         let animation = AnimationLayer(startTime: 2.0, endTime: 3.0, fromX: 0, fromY: 200, toX: 300, toY: 200)
         self.project.animations.append(animation)
         self.viewModel.updateAnimations(animations: self.project.animations)
