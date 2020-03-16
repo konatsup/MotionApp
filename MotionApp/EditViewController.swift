@@ -86,8 +86,6 @@ class EditViewController: UIViewController{
     let trackMarginRight: CGFloat = 50
     let barWidth: CGFloat = 5
 
-    //     trackCount: Int = 20
-    
     init(project: Project) {
         self.project = project
         super.init(nibName: nil, bundle: nil)
@@ -116,10 +114,10 @@ class EditViewController: UIViewController{
             .asDriver(onErrorJustReturn: 0)
             .drive(Binder(self) {me, timerCount in
                 
-                me.label.text = "\(timerCount)"
+                me.label.text = NSString(format: "%.1f", timerCount ) as String
                 me.drawView.update(timerCount)
-                let currentPosition = CGFloat(timerCount) * self.divisionWidth * self.divisionNumPerSec
-                me.timeMeterView.contentOffset.x = currentPosition
+                let currentPositionX = CGFloat(timerCount) * self.divisionWidth * self.divisionNumPerSec
+                me.timeMeterView.contentOffset.x = currentPositionX
                 
             })
             .disposed(by: disposeBag)
@@ -408,14 +406,12 @@ extension EditViewController: UIScrollViewDelegate {
         let currentPoint = scrollView.contentOffset
         
         if scrollView == timeMeterView {
+//            print(currentPoint.x)
             self.scrollViewMain.contentOffset.x = currentPoint.x
             let timerCount: Double = Double(currentPoint.x / (self.divisionWidth * divisionNumPerSec))
-//            print(timerCount)
-//            if timerCount < 0.0 {
-//                timerCount = 0.0
-//            }
             viewModel.setTimerCount(timerCount: timerCount)
         } else if scrollView == scrollViewMain {
+//            print("main: \(currentPoint.x)")
             self.tableView.contentOffset.y = currentPoint.y
             self.timeMeterView.contentOffset.x = currentPoint.x
         }

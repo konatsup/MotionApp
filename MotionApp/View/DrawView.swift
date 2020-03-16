@@ -91,7 +91,11 @@ final class DrawView: UIView {
             let animation = animations[i]
             let drawLayer = drawLayers[i]
             
-            if timerCount < animation.startTime + 0.001 && timerCount > animation.startTime - 0.001  {
+//            if timerCount < animation.startTime {
+//                drawLayer.position = CGPoint(x: animation.fromX, y: animation.fromY)
+//            }
+            
+            if timerCount < animation.startTime + 0.01 && timerCount > animation.startTime - 0.01  {
                 let duration: Double = animation.endTime - animation.startTime
                 
                 print("duration: \(duration)")

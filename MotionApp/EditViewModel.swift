@@ -120,8 +120,10 @@ final class EditViewModel: ViewModelInput, ViewModelOutput {
     }
     
     func setTimerCount(timerCount: Double){
-        self.timerCount = timerCount
-        self.timerCountRelay.accept(timerCount)
+        if(fabs(self.timerCount - timerCount) > 0.001){
+            self.timerCount = timerCount
+            self.timerCountRelay.accept(timerCount)
+        }
     }
     
     @objc func up() {
